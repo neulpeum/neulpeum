@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static jakarta.persistence.FetchType.LAZY;
@@ -20,7 +21,7 @@ public class StoredDrugInfo extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    private Date expireDate;
+    private LocalDate expireDate;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "drugId", nullable = false)

@@ -10,11 +10,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DrugRequestDto {
 
-    private String drugNameKor;
+    private String drugName;
 
-    public DrugInfo toEntity(String drugNameKor) {
+    public DrugInfo toEntity(String drugName) {
         return DrugInfo.builder()
-                .drugNameKor(drugNameKor)
+                .drugName(drugName)
                 .build();
     }
 }

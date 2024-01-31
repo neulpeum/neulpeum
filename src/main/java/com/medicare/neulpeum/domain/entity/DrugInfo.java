@@ -20,5 +20,5 @@ public class DrugInfo extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String drugNameKor;
+    private String drugName;
 }

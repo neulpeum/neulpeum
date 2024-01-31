@@ -6,11 +6,11 @@ import com.medicare.neulpeum.dto.DrugResponseDto;
 import java.util.List;
 
 public interface DrugService {
-    void save(DrugRequestDto drugInfoRequestDto);
+    void save(DrugRequestDto drugRequestDto);
 
     List<DrugResponseDto> findAll();
 
-    DrugResponseDto update(long id, DrugRequestDto drugInfoRequestDto);
+//    DrugResponseDto update(long id, DrugRequestDto drugInfoRequestDto);
 
     void delete(long id);
 }

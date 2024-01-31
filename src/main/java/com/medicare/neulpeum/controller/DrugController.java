@@ -34,18 +34,18 @@ public class DrugController {
         return ResponseEntity.ok(drugResponseDtoList);
     }
 
-    @PutMapping("/drugInfo/{drugId}")
-    public ResponseEntity<DrugResponseDto> updateDrugInfo(
-            @PathVariable("drugId") long drugId,
-            @RequestBody DrugRequestDto diReq
-    ) {
-        try {
-            ResponseEntity.ok(drugService.update(drugId, diReq));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    @PutMapping("/drugInfo/{drugId}")
+//    public ResponseEntity<DrugResponseDto> updateDrugInfo(
+//            @PathVariable("drugId") long drugId,
+//            @RequestBody DrugRequestDto diReq
+//    ) {
+//        try {
+//            ResponseEntity.ok(drugService.update(drugId, diReq));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     @DeleteMapping("/drugInfo/{drugId}")
     public ResponseEntity<HttpStatus> deleteDrugInfo(@PathVariable("drugId") long drugId) {
