@@ -10,7 +10,5 @@ public interface DrugService {
 
     List<DrugResponseDto> findAll();
 
-//    DrugResponseDto update(long id, DrugRequestDto drugInfoRequestDto);
-
-    void delete(long id);
+    List<DrugResponseDto> findByDrugName(String drugName);
 }

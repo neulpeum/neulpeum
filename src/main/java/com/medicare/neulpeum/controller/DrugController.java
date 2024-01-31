@@ -16,7 +16,7 @@ import java.util.List;
 public class DrugController {
     private final DrugService drugService;
 
-    // 약 재고 저장 기본 CRUD 코드 -> api 문서 형태에 맞춰 수정 필요
+    // 약 재고 저장 -> api 문서 형태에 맞춰 수정 필요
     @PostMapping("/drug")
     public ResponseEntity<?> postDrugInfo(@RequestBody DrugRequestDto diReq) {
         try {
@@ -27,6 +27,7 @@ public class DrugController {
         }
     }
 
+    // 약 재고 전체 조회
     @GetMapping("/drug")
     public ResponseEntity<List<DrugResponseDto>> getDrugInfo() {
         List<DrugResponseDto> drugResponseDtoList = drugService.findAll();
@@ -34,28 +35,11 @@ public class DrugController {
         return ResponseEntity.ok(drugResponseDtoList);
     }
 
-//    @PutMapping("/drugInfo/{drugId}")
-//    public ResponseEntity<DrugResponseDto> updateDrugInfo(
-//            @PathVariable("drugId") long drugId,
-//            @RequestBody DrugRequestDto diReq
-//    ) {
-//        try {
-//            ResponseEntity.ok(drugService.update(drugId, diReq));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    // 약 재고 검색 기능
+    @GetMapping("/findDrug")
+    public ResponseEntity<List<DrugResponseDto>> findDrugInfo(@RequestParam String drugName) {
+        List<DrugResponseDto> drugResponseDtoList = drugService.findByDrugName(drugName);
 
-    @DeleteMapping("/drugInfo/{drugId}")
-    public ResponseEntity<HttpStatus> deleteDrugInfo(@PathVariable("drugId") long drugId) {
-        try {
-            drugService.delete(drugId);
-            ResponseEntity.ok(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return ResponseEntity.ok(drugResponseDtoList);
     }
 }

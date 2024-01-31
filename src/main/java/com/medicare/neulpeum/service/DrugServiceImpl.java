@@ -53,30 +53,20 @@ public class DrugServiceImpl implements DrugService{
         return DrugInfoResponseDtoList;
     }
 
-//    @Override
-//    public DrugResponseDto update(long id, DrugRequestDto drugInfoRequestDto) {
-//        try {
-//            Optional<DrugInfo> drugInfo = drugRepository.findById(id);
-//            if (drugInfo.isPresent()) {
-//                DrugInfo _druginfo = drugInfo.get();
-//                _druginfo.setDrugName(drugInfoRequestDto.getDrugNameKor());
-//                return new DrugResponseDto(_druginfo);
-//            } else {
-//                return null;
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//    }
-
     @Override
-    public void delete(long id) {
-        try {
-            drugRepository.deleteById(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public List<DrugResponseDto> findByDrugName(String drugName) {
+        List<DrugInfo> findDrug = drugRepository.findByDrugName(drugName);
+
+        List<DrugResponseDto> drugResponseDtoList = findDrug.stream()
+                .filter(drugInfo -> drugInfo.getDrugName().equals(drugName))
+                .map(drugInfo -> {
+                    StoredDrugInfo storedDrugInfo = storedDrugInfoRepository.findByDrugInfo(drugInfo)
+                            .orElseThrow(() -> new RuntimeException(drugName + "을 찾을 수 없습니다."));
+
+                    return new DrugResponseDto(drugInfo, storedDrugInfo);
+                })
+                .collect(Collectors.toList());
+
+        return drugResponseDtoList;
     }
 }
