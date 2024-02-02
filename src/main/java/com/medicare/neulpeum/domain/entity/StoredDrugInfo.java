@@ -28,7 +28,7 @@ public class StoredDrugInfo extends BaseTimeEntity {
     private DrugInfo drugInfo;
 
     @Column(nullable = false)
-    private Date stockDate; // 입고 날짜
+    private LocalDate stockDate; // 입고 날짜
 
     @Column(nullable = false)
     private Integer stockAmount;
