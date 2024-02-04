@@ -1,5 +1,6 @@
 package com.medicare.neulpeum.controller;
 
+import com.medicare.neulpeum.domain.entity.PatientInfo;
 import com.medicare.neulpeum.dto.DrugResponseDto;
 import com.medicare.neulpeum.dto.PatientRequestDto;
 import com.medicare.neulpeum.dto.PatientResponseDto;

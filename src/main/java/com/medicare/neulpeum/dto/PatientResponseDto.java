@@ -9,14 +9,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PatientResponseDto {
-    private String name;
+    private Long patientId;
+    private String patientName;
     private String address;
     private String disease;
     private String takingDrug;
     private String specialReport;
 
     public PatientResponseDto(PatientInfo patientInfo) {
-        this.name = patientInfo.getPatientName();
+        this.patientId = patientInfo.getId();
+        this.patientName = patientInfo.getPatientName();
         this.address = patientInfo.getAddress();
         this.disease = patientInfo.getDisease();
         this.takingDrug = patientInfo.getTakingDrug();
