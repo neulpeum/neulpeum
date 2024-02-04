@@ -2,6 +2,7 @@ package com.medicare.neulpeum.controller;
 
 import com.medicare.neulpeum.domain.entity.PatientInfo;
 import com.medicare.neulpeum.dto.DrugResponseDto;
+import com.medicare.neulpeum.dto.PatientDetailResponseDto;
 import com.medicare.neulpeum.dto.PatientRequestDto;
 import com.medicare.neulpeum.dto.PatientResponseDto;
 import com.medicare.neulpeum.service.PatientService;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -43,5 +45,13 @@ public class PatientController {
         List<PatientResponseDto> patientResponseDtoList = patientService.findAllByPatientName(patientName);
 
         return ResponseEntity.ok(patientResponseDtoList);
+    }
+
+    // 주민 상세 정보 조회
+    @GetMapping("/patientInfo")
+    public ResponseEntity<List<PatientDetailResponseDto>> findPatientInfo(@RequestParam Long patientId) {
+        List<PatientDetailResponseDto> patientDetailResponseDtoList = patientService.findByPatientId(patientId);
+
+        return ResponseEntity.ok(patientDetailResponseDtoList);
     }
 }

@@ -1,9 +1,8 @@
 package com.medicare.neulpeum.service;
 
 import com.medicare.neulpeum.Repository.PatientRepository;
-import com.medicare.neulpeum.domain.entity.DrugInfo;
 import com.medicare.neulpeum.domain.entity.PatientInfo;
-import com.medicare.neulpeum.dto.DrugResponseDto;
+import com.medicare.neulpeum.dto.PatientDetailResponseDto;
 import com.medicare.neulpeum.dto.PatientRequestDto;
 import com.medicare.neulpeum.dto.PatientResponseDto;
 import lombok.extern.slf4j.Slf4j;
@@ -58,4 +57,16 @@ public class PatientServiceImpl implements PatientService {
 
         return patientResponseDtoList;
     }
+
+    @Override
+    public List<PatientDetailResponseDto> findByPatientId(Long id) {
+        List<PatientInfo> findPatientInfo = patientRepository.findByPatientId(id);
+
+        List<PatientDetailResponseDto> patientDetailResponseDtoList = findPatientInfo.stream()
+                .map(patientInfo -> new PatientDetailResponseDto(patientInfo))
+                .collect(Collectors.toList());
+
+        return patientDetailResponseDtoList;
+    }
+
 }

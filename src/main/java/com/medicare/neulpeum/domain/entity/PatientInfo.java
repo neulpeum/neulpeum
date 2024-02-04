@@ -23,7 +23,7 @@ public class PatientInfo extends BaseTimeEntity {
     private String patientName;
 
     @Column
-    private Date birthDate;
+    private String birthDate;
 
     @Column(nullable = false)
     private String address;
@@ -36,5 +36,8 @@ public class PatientInfo extends BaseTimeEntity {
 
     @Column
     private String disease;
+
+    @Column
+    private String phoneNum;
 }
 
