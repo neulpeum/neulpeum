@@ -16,7 +16,7 @@ import java.util.List;
 public class DrugController {
     private final DrugService drugService;
 
-    // 약 재고 등록 및 수정 -> api 문서 형태에 맞춰 수정 필요
+    // 약 재고 수정 및 새로운 약에 대해 저장
     @PostMapping("/drug")
     public ResponseEntity<?> postDrugInfo(@RequestBody DrugRequestDto diReq) {
         try {
