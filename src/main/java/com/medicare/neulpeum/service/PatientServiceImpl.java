@@ -26,7 +26,7 @@ public class PatientServiceImpl implements PatientService {
     public void save(PatientRequestDto patientReq) {
         try {
             PatientInfo patientInfo =  patientReq.toEntity(
-                    patientReq.getName(),
+                    patientReq.getPatientName(),
                     patientReq.getAddress(),
                     patientReq.getDisease(),
                     patientReq.getTakingDrug(),
