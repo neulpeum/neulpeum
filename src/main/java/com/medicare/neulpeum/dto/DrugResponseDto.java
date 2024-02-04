@@ -14,14 +14,14 @@ public class DrugResponseDto {
 
     private String drugName;
     private LocalDate expireDate;
-    private int useableAmount;
+    private int usableAmount;
     private LocalDate drugEnrollTime;
     private LocalDate drugModifiedTime;
 
     public DrugResponseDto(DrugInfo drugInfo) {
         this.drugName = drugInfo.getDrugName();
         this.expireDate = drugInfo.getExpireDate();
-        this.useableAmount = drugInfo.getUsableAmount();
+        this.usableAmount = drugInfo.getUsableAmount();
         this.drugEnrollTime = drugInfo.getCreatedAt();
         this.drugModifiedTime = drugInfo.getModifiedAt();
     }
