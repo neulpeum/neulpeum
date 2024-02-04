@@ -2,11 +2,15 @@ package com.medicare.neulpeum.domain.entity;
 
 import com.medicare.neulpeum.domain.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.Date;
 
 @Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "patientInfo")
 public class PatientInfo extends BaseTimeEntity {
@@ -18,22 +22,19 @@ public class PatientInfo extends BaseTimeEntity {
     @Column(nullable = false)
     private String patientName;
 
-    @Column(nullable = false)
+    @Column
     private Date birthDate;
 
     @Column(nullable = false)
     private String address;
 
+    @Column
     private String specialReport;
 
+    @Column
     private String takingDrug;
 
+    @Column
     private String disease;
-
-    @Column(nullable = false)
-    private Date patientEnrollDate;
-
-    @Column(nullable = false)
-    private Date patientModifyDate;
 }
 
