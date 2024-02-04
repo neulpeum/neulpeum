@@ -9,4 +9,6 @@ public interface PatientService {
     void save(PatientRequestDto patientRequestDto);
 
     List<PatientResponseDto> findAll();
+
+    List<PatientResponseDto> findAllByPatientName(String patientName);
 }

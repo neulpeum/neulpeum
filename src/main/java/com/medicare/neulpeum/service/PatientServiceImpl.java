@@ -47,4 +47,15 @@ public class PatientServiceImpl implements PatientService {
 
         return patientResponseDtoList;
     }
+
+    @Override
+    public List<PatientResponseDto> findAllByPatientName(String patientName) {
+        List<PatientInfo> findPatient = patientRepository.findAllByPatientName(patientName);
+
+        List<PatientResponseDto> patientResponseDtoList = findPatient.stream()
+                .map(patientInfo -> new PatientResponseDto(patientInfo))
+                .collect(Collectors.toList());
+
+        return patientResponseDtoList;
+    }
 }

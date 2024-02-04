@@ -10,4 +10,6 @@ import java.util.List;
 public interface PatientRepository extends JpaRepository<PatientInfo, Long> {
     @Override
     List<PatientInfo> findAll();
+
+    List<PatientInfo> findAllByPatientName(String patientName);
 }

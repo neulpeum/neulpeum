@@ -35,4 +35,12 @@ public class PatientController {
 
         return ResponseEntity.ok(patientResponseDto);
     }
+
+    // 주민 검색
+    @GetMapping("/findPatient")
+    public ResponseEntity<List<PatientResponseDto>> findPatient(@RequestParam String patientName) {
+        List<PatientResponseDto> patientResponseDtoList = patientService.findAllByPatientName(patientName);
+
+        return ResponseEntity.ok(patientResponseDtoList);
+    }
 }
