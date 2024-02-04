@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface DrugService {
     void save(DrugRequestDto drugRequestDto);
-//
-//    List<DrugResponseDto> findAll();
-//
-//    List<DrugResponseDto> findByDrugName(String drugName);
+
+    List<DrugResponseDto> findAll();
+
+    List<DrugResponseDto> findByDrugName(String drugName);
 }
