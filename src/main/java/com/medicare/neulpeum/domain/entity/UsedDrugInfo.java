@@ -23,11 +23,11 @@ public class UsedDrugInfo extends BaseTimeEntity {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "patientId", nullable = false)
-    private PatientInfo patientInfo;
+    private PatientInfo patientId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "consultId", nullable = false)
-    private ConsultContentInfo consultContentInfo;
+    private ConsultContentInfo consultId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "expireDate", nullable = false)
