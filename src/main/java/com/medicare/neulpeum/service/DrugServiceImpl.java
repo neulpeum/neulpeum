@@ -21,15 +21,9 @@ public class DrugServiceImpl implements DrugService{
     DrugRepository drugRepository;
 
     @Override
-    public void save(DrugRequestDto diReq) {
+    public void save(DrugRequestDto drugReq) {
         try {
-            DrugInfo drugInfo = diReq.toEntity(
-                    diReq.getDrugName(),
-                    diReq.getExpireDate(),
-                    diReq.getStockAmount(),
-                    diReq.getUsableAmount(),
-                    diReq.getUsedAmount());
-            DrugInfo savedDrugInfo = drugRepository.save(drugInfo);
+            drugRepository.save(drugReq.toEntity(drugReq));
         } catch (Exception e) {
             log.error("DrugInfo 저장 중 오류 발생: {}", e.getMessage());
         }
@@ -41,7 +35,9 @@ public class DrugServiceImpl implements DrugService{
         List<DrugInfo> drugInfos = drugRepository.findAll();
 
         List<DrugResponseDto> drugResponseDtoList =
-                drugInfos.stream().map(drugInfo -> new DrugResponseDto(drugInfo)).collect(Collectors.toList());
+                drugInfos.stream().map(
+                        drugInfo -> new DrugResponseDto(drugInfo)).collect(Collectors.toList()
+                );
 
         return drugResponseDtoList;
     }
