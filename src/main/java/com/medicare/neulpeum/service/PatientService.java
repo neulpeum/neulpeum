@@ -1,5 +1,6 @@
 package com.medicare.neulpeum.service;
 
+import com.medicare.neulpeum.dto.PatientDetailRequestDto;
 import com.medicare.neulpeum.dto.PatientDetailResponseDto;
 import com.medicare.neulpeum.dto.PatientRequestDto;
 import com.medicare.neulpeum.dto.PatientResponseDto;
@@ -15,4 +16,6 @@ public interface PatientService {
     List<PatientResponseDto> findAllByPatientName(String patientName);
 
     PatientDetailResponseDto findByPatientId(Long patientId);
+
+    void update(PatientDetailRequestDto patientDetailRequestDto);
 }

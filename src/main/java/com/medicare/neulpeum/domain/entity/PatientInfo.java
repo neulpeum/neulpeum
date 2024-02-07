@@ -23,7 +23,7 @@ public class PatientInfo extends BaseTimeEntity {
     private String patientName;
 
     @Column
-    private Date birthDate;
+    private String birthDate;
 
     @Column
     private String phoneNum;
