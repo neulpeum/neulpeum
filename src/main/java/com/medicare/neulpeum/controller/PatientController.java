@@ -2,6 +2,7 @@ package com.medicare.neulpeum.controller;
 
 import com.medicare.neulpeum.domain.entity.PatientInfo;
 import com.medicare.neulpeum.dto.DrugResponseDto;
+import com.medicare.neulpeum.dto.PatientDetailResponseDto;
 import com.medicare.neulpeum.dto.PatientRequestDto;
 import com.medicare.neulpeum.dto.PatientResponseDto;
 import com.medicare.neulpeum.service.PatientService;
@@ -44,4 +45,16 @@ public class PatientController {
 
         return ResponseEntity.ok(patientResponseDtoList);
     }
+
+    // 주민 상세 정보 조회
+    @GetMapping("/patientInfo")
+    public ResponseEntity<PatientDetailResponseDto> getPatientDetail(@RequestParam Long patientId) {
+        PatientDetailResponseDto patientDetailResponseDto = patientService.findByPatientId(patientId);
+        if (patientDetailResponseDto != null) {
+            return ResponseEntity.ok(patientDetailResponseDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
