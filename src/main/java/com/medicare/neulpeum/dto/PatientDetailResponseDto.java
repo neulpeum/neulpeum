@@ -14,7 +14,7 @@ import java.util.Date;
 public class PatientDetailResponseDto {
     private Long patientId;
     private String patientName;
-    private Date birthDate;
+    private String birthDate;
     private String phoneNum;
     private String address;
     private String disease;
