@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -17,6 +18,7 @@ public class PatientDetailResponseDto {
     private String phoneNum;
     private String address;
     private String disease;
+    private String takingDrug;
     private String specialReport;
     private LocalDate patientEnrollDate;
     private LocalDate patientModifyDate;
@@ -28,6 +30,7 @@ public class PatientDetailResponseDto {
         this.phoneNum = patientInfo.getPhoneNum();
         this.address = patientInfo.getAddress();
         this.disease = patientInfo.getDisease();
+        this.takingDrug = patientInfo.getTakingDrug();
         this.specialReport = patientInfo.getSpecialReport();
         this.patientEnrollDate = patientInfo.getCreatedAt();
         this.patientModifyDate = patientInfo.getModifiedAt();

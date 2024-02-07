@@ -1,10 +1,7 @@
 package com.medicare.neulpeum.controller;
 
 import com.medicare.neulpeum.domain.entity.PatientInfo;
-import com.medicare.neulpeum.dto.DrugResponseDto;
-import com.medicare.neulpeum.dto.PatientDetailResponseDto;
-import com.medicare.neulpeum.dto.PatientRequestDto;
-import com.medicare.neulpeum.dto.PatientResponseDto;
+import com.medicare.neulpeum.dto.*;
 import com.medicare.neulpeum.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -49,9 +46,25 @@ public class PatientController {
 
     // 주민 상세 정보 조회
     @GetMapping("/patientInfo")
-    public ResponseEntity<List<PatientDetailResponseDto>> findPatientInfo(@RequestParam Long patientId) {
-        List<PatientDetailResponseDto> patientDetailResponseDtoList = patientService.findByPatientId(patientId);
+    public ResponseEntity<PatientDetailResponseDto> getPatientDetail(@RequestParam Long patientId) {
+        PatientDetailResponseDto patientDetailResponseDto = patientService.findByPatientId(patientId);
+        if (patientDetailResponseDto != null) {
+            return ResponseEntity.ok(patientDetailResponseDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
-        return ResponseEntity.ok(patientDetailResponseDtoList);
+    // 주민 상세 정보 수정
+    @PutMapping("/patientInfo")
+    public ResponseEntity<?> updatePatientInfo(@RequestBody PatientDetailRequestDto patientDetailRequestDto) {
+        try {
+            patientService.update(patientDetailRequestDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body("환자 정보 수정 완료");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("환자를 찾을 수 없습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("환자 정보 수정 중 오류 발생: " + e.getMessage());
+        }
     }
 }

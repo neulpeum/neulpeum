@@ -14,7 +14,7 @@ public interface PatientRepository extends JpaRepository<PatientInfo, Long> {
 
     List<PatientInfo> findAllByPatientName(String patientName);
 
-    List<PatientInfo> findByPatientId(Long id);
+    Optional<PatientInfo> findById(Long patientId);
 
     PatientInfo findByPatientName(String patientName);//이름으로 검색해서 찾는게 상담추가에 필요해서 적긴 했는데 맞나?
 }

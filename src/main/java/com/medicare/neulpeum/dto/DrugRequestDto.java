@@ -18,13 +18,13 @@ public class DrugRequestDto {
     private int usableAmount;
     private int usedAmount;
 
-    public DrugInfo toEntity(String drugName, LocalDate expireDate, int stockAmount, int usableAmount, int usedAmount) {
+    public DrugInfo toEntity(DrugRequestDto drugReq) {
         return DrugInfo.builder()
-                .drugName(drugName)
-                .expireDate(expireDate)
-                .stockAmount(stockAmount)
-                .usableAmount(usableAmount)
-                .usedAmount(usedAmount)
+                .drugName(drugReq.getDrugName())
+                .expireDate(drugReq.getExpireDate())
+                .stockAmount(drugReq.getStockAmount())
+                .usableAmount(drugReq.getUsableAmount())
+                .usedAmount(drugReq.getUsedAmount())
                 .build();
     }
 }

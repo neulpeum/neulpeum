@@ -2,15 +2,14 @@ package com.medicare.neulpeum.service;
 
 import com.medicare.neulpeum.Repository.PatientRepository;
 import com.medicare.neulpeum.domain.entity.PatientInfo;
-import com.medicare.neulpeum.dto.PatientDetailResponseDto;
-import com.medicare.neulpeum.dto.PatientRequestDto;
-import com.medicare.neulpeum.dto.PatientResponseDto;
+import com.medicare.neulpeum.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -59,14 +58,33 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<PatientDetailResponseDto> findByPatientId(Long id) {
-        List<PatientInfo> findPatientInfo = patientRepository.findByPatientId(id);
-
-        List<PatientDetailResponseDto> patientDetailResponseDtoList = findPatientInfo.stream()
-                .map(patientInfo -> new PatientDetailResponseDto(patientInfo))
-                .collect(Collectors.toList());
-
-        return patientDetailResponseDtoList;
+    public PatientDetailResponseDto findByPatientId(Long patientId) {
+        Optional<PatientInfo> patientInfoOptional = patientRepository.findById(patientId);
+        return patientInfoOptional.map(PatientDetailResponseDto::new).orElse(null);
     }
 
+    @Override
+    public void update(PatientDetailRequestDto patientDetailRequestDto) {
+        try {
+            Optional<PatientInfo> optionalPatientInfo = patientRepository.findById(patientDetailRequestDto.getPatientId());
+            if (optionalPatientInfo.isPresent()) {
+                PatientInfo patientInfo = optionalPatientInfo.get();
+                // 주어진 DTO에서 새로운 정보 추출하여 업데이트
+                patientInfo.setPatientName(patientDetailRequestDto.getPatientName());
+                patientInfo.setBirthDate(patientDetailRequestDto.getBirthDate());
+                patientInfo.setPhoneNum(patientDetailRequestDto.getPhoneNum());
+                patientInfo.setAddress(patientDetailRequestDto.getAddress());
+                patientInfo.setDisease(patientDetailRequestDto.getDisease());
+                patientInfo.setTakingDrug(patientDetailRequestDto.getTakingDrug());
+                patientInfo.setSpecialReport(patientDetailRequestDto.getSpecialReport());
+                // 업데이트된 정보 저장
+                patientRepository.save(patientInfo);
+            } else {
+                throw new IllegalArgumentException("환자를 찾을 수 없습니다. ID: " + patientDetailRequestDto.getPatientId());
+            }
+        } catch (Exception e) {
+            log.error("환자 정보 수정 중 오류 발생: {}", e.getMessage());
+            throw new RuntimeException("환자 정보 수정 중 오류 발생: " + e.getMessage());
+        }
+    }
 }
