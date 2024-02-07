@@ -4,6 +4,7 @@ import com.medicare.neulpeum.Repository.PatientRepository;
 import com.medicare.neulpeum.domain.entity.DrugInfo;
 import com.medicare.neulpeum.domain.entity.PatientInfo;
 import com.medicare.neulpeum.dto.DrugResponseDto;
+import com.medicare.neulpeum.dto.PatientDetailResponseDto;
 import com.medicare.neulpeum.dto.PatientRequestDto;
 import com.medicare.neulpeum.dto.PatientResponseDto;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -58,4 +60,11 @@ public class PatientServiceImpl implements PatientService {
 
         return patientResponseDtoList;
     }
+
+    @Override
+    public PatientDetailResponseDto findByPatientId(Long patientId) {
+        Optional<PatientInfo> patientInfoOptional = patientRepository.findById(patientId);
+        return patientInfoOptional.map(PatientDetailResponseDto::new).orElse(null);
+    }
+
 }
