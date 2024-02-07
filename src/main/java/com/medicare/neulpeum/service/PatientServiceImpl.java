@@ -1,7 +1,6 @@
 package com.medicare.neulpeum.service;
 
 import com.medicare.neulpeum.Repository.PatientRepository;
-import com.medicare.neulpeum.domain.entity.DrugInfo;
 import com.medicare.neulpeum.domain.entity.PatientInfo;
 import com.medicare.neulpeum.dto.*;
 import lombok.extern.slf4j.Slf4j;

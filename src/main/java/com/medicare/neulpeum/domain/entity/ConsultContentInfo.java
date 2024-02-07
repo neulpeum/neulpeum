@@ -2,13 +2,18 @@ package com.medicare.neulpeum.domain.entity;
 
 import com.medicare.neulpeum.domain.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static jakarta.persistence.FetchType.LAZY;
 
 @Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "consultContentInfo")
 public class ConsultContentInfo extends BaseTimeEntity {
@@ -19,10 +24,10 @@ public class ConsultContentInfo extends BaseTimeEntity {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "patientId", nullable = false)
-    private PatientInfo patientInfo;
+    private PatientInfo patientName;//patientInfo?
 
     @Column(nullable = false)
-    private Date consultDate;
+    private LocalDate consultDate;
 
     @Column(nullable = false)
     private String providerName;
@@ -32,4 +37,8 @@ public class ConsultContentInfo extends BaseTimeEntity {
 
     @Column(nullable = false)
     private Date consultModifyDate;
+
+    @Column
+    private String takingDrug;
+
 }

@@ -18,4 +18,5 @@ public interface PatientService {
     PatientDetailResponseDto findByPatientId(Long patientId);
 
     void update(PatientDetailRequestDto patientDetailRequestDto);
+
 }
