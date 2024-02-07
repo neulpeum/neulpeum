@@ -19,11 +19,8 @@ public class ConsultServiceImpl implements ConsultService{
     @Override
     public void save(ConsultRequestDto consultReq) {
         try {
-            ConsultContentInfo consultContentInfo = consultReq.toEntity(
-                    consultReq.getProviderName(),
-                    consultReq.getTakingDrug(),
-                    consultReq.getConsultContent());
-            ConsultContentInfo saveConsultContentInfo = consultRepository.save(consultContentInfo);
+            ConsultContentInfo consultContentInfo = consultReq.toEntity();
+            consultRepository.save(consultContentInfo);
         } catch (Exception e) {
             log.error("ConsultContentInfo 저장 중 오류 발생: {}", e.getMessage());
         }

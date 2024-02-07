@@ -39,8 +39,5 @@ public class PatientInfo extends BaseTimeEntity {
 
     @Column
     private String disease;
-
-    @Column
-    private String phoneNum;
 }
 

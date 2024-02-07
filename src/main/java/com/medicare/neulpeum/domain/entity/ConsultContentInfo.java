@@ -24,10 +24,10 @@ public class ConsultContentInfo extends BaseTimeEntity {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "patientId", nullable = false)
-    private PatientInfo patientName;//patientInfo?
+    private PatientInfo patientId;
 
     @Column(nullable = false)
-    private LocalDate consultDate;
+    private Date consultDate;
 
     @Column(nullable = false)
     private String providerName;
