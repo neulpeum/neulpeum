@@ -41,7 +41,7 @@ public class ConsultController {
     }
 
     //주민 상담 내용 상세 조회
-    @GetMapping("/patient/consults")
+    @GetMapping("/patient/consultInfo")
     public ResponseEntity<ConsultDetailResponseDto> getConsultDetail(@RequestParam Long consultId) {
         ConsultDetailResponseDto consultDetailResponseDto = consultService.findByConsultId(consultId);
         if (consultDetailResponseDto != null) {
