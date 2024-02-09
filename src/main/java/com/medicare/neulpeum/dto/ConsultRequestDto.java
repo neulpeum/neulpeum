@@ -7,31 +7,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class ConsultRequestDto {
 
-    private String patientName;
+    private PatientInfo patientId;
+    private Date consultDate;
     private String providerName;
     private String takingDrug;
     private String consultContent;
-    private PatientRepository patientInfoRepository;
 
-
-    public ConsultContentInfo toEntity(String providerName, String takingDrug, String consultContent) {
-        //환자 정보 조회(이름)
-        PatientInfo patientInfo = patientInfoRepository.findByPatientName(patientName);
-
+    public ConsultContentInfo toEntity() {
         return ConsultContentInfo.builder()
-                .patientName(patientInfo)
+                .patientId(patientId)
+                .consultDate(consultDate)
                 .providerName(providerName)
                 .takingDrug(takingDrug)
                 .consultContent(consultContent)
                 .build();
-
-
     }
 }
