@@ -3,6 +3,7 @@ package com.medicare.neulpeum.service;
 import com.medicare.neulpeum.Repository.ConsultRepository;
 import com.medicare.neulpeum.domain.entity.ConsultContentInfo;
 import com.medicare.neulpeum.domain.entity.PatientInfo;
+import com.medicare.neulpeum.dto.ConsultDetailResponseDto;
 import com.medicare.neulpeum.dto.ConsultRequestDto;
 import com.medicare.neulpeum.dto.ConsultResponseDto;
 import jakarta.transaction.Transactional;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -39,6 +41,12 @@ public class ConsultServiceImpl implements ConsultService{
                 .map(consultContentInfo -> new ConsultResponseDto(consultContentInfo))
                 .collect(Collectors.toList());
         return consultResponseDtoList;
+    }
+
+    @Override
+    public ConsultDetailResponseDto findByConsultId(Long consultId) {
+        Optional<ConsultContentInfo> consultContentInfoOptional = consultRepository.findById(consultId);
+        return consultContentInfoOptional.map(ConsultDetailResponseDto::new).orElse(null);
     }
 
 

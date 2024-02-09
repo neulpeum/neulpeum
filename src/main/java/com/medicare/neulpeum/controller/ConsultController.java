@@ -1,6 +1,7 @@
 package com.medicare.neulpeum.controller;
 
 import com.medicare.neulpeum.domain.entity.PatientInfo;
+import com.medicare.neulpeum.dto.ConsultDetailResponseDto;
 import com.medicare.neulpeum.dto.ConsultRequestDto;
 import com.medicare.neulpeum.dto.ConsultResponseDto;
 import com.medicare.neulpeum.service.ConsultService;
@@ -37,6 +38,16 @@ public class ConsultController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
 
+    //주민 상담 내용 상세 조회
+    @GetMapping("/patient/consults")
+    public ResponseEntity<ConsultDetailResponseDto> getConsultDetail(@RequestParam Long consultId) {
+        ConsultDetailResponseDto consultDetailResponseDto = consultService.findByConsultId(consultId);
+        if (consultDetailResponseDto != null) {
+            return ResponseEntity.ok(consultDetailResponseDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
