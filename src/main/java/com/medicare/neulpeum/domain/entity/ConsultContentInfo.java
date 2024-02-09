@@ -20,7 +20,7 @@ public class ConsultContentInfo extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "consultId")
-    private Long id;
+    private Long consultId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "patientId", nullable = false)
