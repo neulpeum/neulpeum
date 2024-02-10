@@ -41,4 +41,5 @@ public class ConsultContentInfo extends BaseTimeEntity {
     @Column
     private String takingDrug;
 
+
 }

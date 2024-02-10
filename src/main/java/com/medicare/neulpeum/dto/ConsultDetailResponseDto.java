@@ -13,12 +13,14 @@ import java.util.Date;
 @NoArgsConstructor
 public class ConsultDetailResponseDto {
     private String patientName;
+    private String providerName;
     private Date consultDate;
     private String consultContent;
     private String takingDrug;
 
     public ConsultDetailResponseDto(ConsultContentInfo consultContentInfo) {
         this.patientName = consultContentInfo.getPatientId().getPatientName();
+        this.providerName = consultContentInfo.getProviderName();
         this.consultDate = consultContentInfo.getConsultDate();
         this.consultContent = consultContentInfo.getConsultContent();
         this.takingDrug = consultContentInfo.getTakingDrug();

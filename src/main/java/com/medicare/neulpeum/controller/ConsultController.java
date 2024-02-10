@@ -4,6 +4,7 @@ import com.medicare.neulpeum.domain.entity.PatientInfo;
 import com.medicare.neulpeum.dto.ConsultDetailResponseDto;
 import com.medicare.neulpeum.dto.ConsultRequestDto;
 import com.medicare.neulpeum.dto.ConsultResponseDto;
+import com.medicare.neulpeum.dto.ConsultUpdateRequestDto;
 import com.medicare.neulpeum.service.ConsultService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -50,4 +51,20 @@ public class ConsultController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    //주민 상담 상세 내용 수정
+    @PutMapping("/patient/consultInfo")
+    public ResponseEntity<?> updateConsultInfo(@RequestBody ConsultUpdateRequestDto consultUpdateRequestDto) {
+        try {
+            consultService.update(consultUpdateRequestDto);
+                return ResponseEntity.status(HttpStatus.OK).body("주민 상담 상세 내용 수정 완료");
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("상담 정보를 찾을 수 없습니다.");
+            } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("주민 상담 내용 수정 중 오류 발생: " + e.getMessage());
+        }
+    }
+
+
 }
