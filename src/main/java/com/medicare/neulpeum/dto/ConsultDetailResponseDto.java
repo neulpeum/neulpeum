@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -14,7 +15,7 @@ import java.util.Date;
 public class ConsultDetailResponseDto {
     private String patientName;
     private String providerName;
-    private Date consultDate;
+    private LocalDate consultDate;
     private String consultContent;
     private String takingDrug;
 

@@ -5,7 +5,9 @@ import com.medicare.neulpeum.domain.entity.PatientInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -14,7 +16,7 @@ import java.util.Date;
 public class ConsultUpdateRequestDto {
 //    private PatientInfo patientName;
     private Long consultId;
-    private Date consultDate;
+    private LocalDate consultDate;
     private String providerName;
     private String consultContent;
     private String takingDrug;

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -30,7 +31,7 @@ public class ConsultController {
         }
     }
 
-    //주민 상담 내역 조회
+    //주민 상담 내역 조회(상담 리스트 조회)
     @GetMapping("/patient/consult")
     public ResponseEntity<List<ConsultResponseDto>> getConsult(@RequestParam PatientInfo patientId) {
         List<ConsultResponseDto> consultResponseDto = consultService.findAllByPatientId(patientId);

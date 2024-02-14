@@ -1,6 +1,7 @@
 package com.medicare.neulpeum.service;
 
 import com.medicare.neulpeum.Repository.ConsultRepository;
+import com.medicare.neulpeum.Repository.PatientRepository;
 import com.medicare.neulpeum.domain.entity.ConsultContentInfo;
 import com.medicare.neulpeum.domain.entity.PatientInfo;
 import com.medicare.neulpeum.dto.ConsultDetailResponseDto;
@@ -27,12 +28,20 @@ public class ConsultServiceImpl implements ConsultService{
     @Override
     public void save(ConsultRequestDto consultReq) {
         try {
-            ConsultContentInfo consultContentInfo = consultReq.toEntity();
+            ConsultContentInfo consultContentInfo = consultReq.toEntity(
+                    consultReq.getPatientId(),
+                    consultReq.getPatientName(),
+                    consultReq.getProviderName(),
+                    consultReq.getTakingDrug(),
+                    consultReq.getConsultContent()
+            );
             consultRepository.save(consultContentInfo);
         } catch (Exception e) {
             log.error("ConsultContentInfo 저장 중 오류 발생: {}", e.getMessage());
         }
     }
+
+
 
     @Override
     public List<ConsultResponseDto> findAllByPatientId(PatientInfo patientId) {

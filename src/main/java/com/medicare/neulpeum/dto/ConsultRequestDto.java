@@ -1,32 +1,33 @@
 package com.medicare.neulpeum.dto;
 
-import com.medicare.neulpeum.Repository.PatientRepository;
+
 import com.medicare.neulpeum.domain.entity.ConsultContentInfo;
 import com.medicare.neulpeum.domain.entity.PatientInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @NoArgsConstructor
 public class ConsultRequestDto {
+//    PatientInfo patientInfo;
 
     private PatientInfo patientId;
-    private Date consultDate;
+    private PatientInfo patientName;
     private String providerName;
     private String takingDrug;
     private String consultContent;
 
-    public ConsultContentInfo toEntity() {
+
+    public ConsultContentInfo toEntity(PatientInfo patientInfo, PatientInfo patientName, String providerName, String takingDrug, String consultContent) {
         return ConsultContentInfo.builder()
-                .patientId(patientId)
-                .consultDate(consultDate)
+                .patientId(patientInfo)
+                .patientName(patientInfo)
                 .providerName(providerName)
                 .takingDrug(takingDrug)
                 .consultContent(consultContent)
                 .build();
     }
+
 }

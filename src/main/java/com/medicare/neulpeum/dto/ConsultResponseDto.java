@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -14,7 +15,7 @@ public class ConsultResponseDto {
     private Long consultId;
     private String providerName;
     private String takingDrug;
-    private Date consultDate;
+    private LocalDate consultDate;
 
     public ConsultResponseDto(ConsultContentInfo consultContentInfo) {
         this.consultId = consultContentInfo.getConsultId();
