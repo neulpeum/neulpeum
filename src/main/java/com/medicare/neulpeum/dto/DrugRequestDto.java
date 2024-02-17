@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class DrugRequestDto {
 
+    private Long drugId;
     private String drugName;
     private LocalDate expireDate;
     private int stockAmount;
@@ -20,6 +21,7 @@ public class DrugRequestDto {
 
     public DrugInfo toEntity(DrugRequestDto drugReq) {
         return DrugInfo.builder()
+                .id(drugReq.getDrugId())
                 .drugName(drugReq.getDrugName())
                 .expireDate(drugReq.getExpireDate())
                 .stockAmount(drugReq.getStockAmount())

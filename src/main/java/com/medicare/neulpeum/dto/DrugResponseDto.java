@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class DrugResponseDto {
 
+    private Long drugId;
     private String drugName;
     private LocalDate expireDate;
     private int usableAmount;
@@ -19,6 +20,7 @@ public class DrugResponseDto {
     private LocalDate drugModifiedTime;
 
     public DrugResponseDto(DrugInfo drugInfo) {
+        this.drugId = drugInfo.getId();
         this.drugName = drugInfo.getDrugName();
         this.expireDate = drugInfo.getExpireDate();
         this.usableAmount = drugInfo.getUsableAmount();
