@@ -13,14 +13,4 @@ public class ConsultRequestDto {
     private String providerName;
     private String takingDrug;
     private String consultContent;
-
-//    public ConsultContentInfo toEntity(/*PatientInfo patientInfo, */String providerName, String takingDrug, String consultContent) {
-//        return ConsultContentInfo.builder()
-////                .patientInfo(patientInfo)
-//                .providerName(providerName)
-//                .takingDrug(takingDrug)
-//                .consultContent(consultContent)
-//                .build();
-//    }
-
 }
