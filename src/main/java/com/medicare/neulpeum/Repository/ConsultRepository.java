@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface ConsultRepository extends JpaRepository<ConsultContentInfo, Long> {
     List<ConsultContentInfo> findAllByPatientId(PatientInfo patientId);
 
-    Optional<ConsultContentInfo> findById(Long consultId);
+    Optional<ConsultContentInfo> findByConsultId(Long consultId);
 }
