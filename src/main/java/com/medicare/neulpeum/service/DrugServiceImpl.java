@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -54,4 +55,25 @@ public class DrugServiceImpl implements DrugService{
         return drugResponseDtoList;
     }
 
+    @Override
+    public boolean existsByDrugName(String drugName) {
+        return drugRepository.existsByDrugName(drugName);
+    }
+
+    @Override
+    public void update(DrugRequestDto drugRequestDto) {
+        Long drugId = drugRequestDto.getDrugId();
+        Optional<DrugInfo> optionalDrug = drugRepository.findById(drugId);
+        if (optionalDrug.isPresent()) {
+            DrugInfo existingDrug = optionalDrug.get();
+            existingDrug.setDrugName(drugRequestDto.getDrugName());
+            existingDrug.setExpireDate(drugRequestDto.getExpireDate());
+            existingDrug.setStockAmount(drugRequestDto.getStockAmount());
+            existingDrug.setUsableAmount(drugRequestDto.getUsableAmount());
+            existingDrug.setUsedAmount(drugRequestDto.getUsedAmount());
+            drugRepository.save(existingDrug);
+        } else {
+            throw new RuntimeException("약물을 찾을 수 없습니다: " + drugId);
+        }
+    }
 }
