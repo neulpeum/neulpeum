@@ -7,7 +7,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import static jakarta.persistence.FetchType.LAZY;
 
@@ -25,12 +24,8 @@ public class ConsultContentInfo extends BaseTimeEntity {
     private Long consultId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "patientId", nullable = false, referencedColumnName = "patientID")
+    @JoinColumn(name = "patientId", nullable = false)
     private PatientInfo patientId;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "patientName", nullable = false, referencedColumnName = "patientName")
-    private PatientInfo patientName;
 
     @CreatedDate //객체가 생성된 생성일지 자동으로 처리
     @Column(nullable = false)

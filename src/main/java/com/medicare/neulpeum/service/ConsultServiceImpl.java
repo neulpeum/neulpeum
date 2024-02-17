@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
+
 @Slf4j
 @Service
 @Transactional
@@ -24,17 +26,21 @@ public class ConsultServiceImpl implements ConsultService{
     
     @Autowired
     ConsultRepository consultRepository;
+    @Autowired
+    PatientRepository patientRepository;
+
+
 
     @Override
     public void save(ConsultRequestDto consultReq) {
         try {
-            ConsultContentInfo consultContentInfo = consultReq.toEntity(
-                    consultReq.getPatientId(),
-                    consultReq.getPatientName(),
-                    consultReq.getProviderName(),
-                    consultReq.getTakingDrug(),
-                    consultReq.getConsultContent()
-            );
+            PatientInfo patientId = patientRepository.findById(consultReq.getPatientId()).get();
+            ConsultContentInfo consultContentInfo = ConsultContentInfo.builder()
+                    .patientId(patientId)
+                    .providerName(consultReq.getProviderName())
+                    .takingDrug(consultReq.getTakingDrug())
+                    .consultContent(consultReq.getConsultContent())
+                    .build();
             consultRepository.save(consultContentInfo);
         } catch (Exception e) {
             log.error("ConsultContentInfo 저장 중 오류 발생: {}", e.getMessage());

@@ -1,7 +1,6 @@
 package com.medicare.neulpeum.Repository;
 
 import com.medicare.neulpeum.domain.entity.PatientInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +15,5 @@ public interface PatientRepository extends JpaRepository<PatientInfo, Long> {
     List<PatientInfo> findAllByPatientName(String patientName);
 
     Optional<PatientInfo> findById(Long patientId);
-
 
 }

@@ -1,8 +1,6 @@
 package com.medicare.neulpeum.dto;
 
 
-import com.medicare.neulpeum.domain.entity.ConsultContentInfo;
-import com.medicare.neulpeum.domain.entity.PatientInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,23 +9,18 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ConsultRequestDto {
-//    PatientInfo patientInfo;
-
-    private PatientInfo patientId;
-    private PatientInfo patientName;
+    private Long patientId;
     private String providerName;
     private String takingDrug;
     private String consultContent;
 
-
-    public ConsultContentInfo toEntity(PatientInfo patientInfo, PatientInfo patientName, String providerName, String takingDrug, String consultContent) {
-        return ConsultContentInfo.builder()
-                .patientId(patientInfo)
-                .patientName(patientInfo)
-                .providerName(providerName)
-                .takingDrug(takingDrug)
-                .consultContent(consultContent)
-                .build();
-    }
+//    public ConsultContentInfo toEntity(/*PatientInfo patientInfo, */String providerName, String takingDrug, String consultContent) {
+//        return ConsultContentInfo.builder()
+////                .patientInfo(patientInfo)
+//                .providerName(providerName)
+//                .takingDrug(takingDrug)
+//                .consultContent(consultContent)
+//                .build();
+//    }
 
 }
