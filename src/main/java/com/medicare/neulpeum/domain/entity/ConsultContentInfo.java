@@ -2,27 +2,34 @@ package com.medicare.neulpeum.domain.entity;
 
 import com.medicare.neulpeum.domain.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import static jakarta.persistence.FetchType.LAZY;
 
 @Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "consultContentInfo")
 public class ConsultContentInfo extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "consultId")
-    private Long id;
+    private Long consultId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "patientId", nullable = false)
-    private PatientInfo patientInfo;
+    private PatientInfo patientId;
 
+    @CreatedDate //객체가 생성된 생성일지 자동으로 처리
     @Column(nullable = false)
-    private Date consultDate;
+    private LocalDate consultDate;
 
     @Column(nullable = false)
     private String providerName;
@@ -30,6 +37,11 @@ public class ConsultContentInfo extends BaseTimeEntity {
     @Column(nullable = false)
     private String consultContent;
 
+    @LastModifiedDate //최종 수정 시간 자동으로 처리
     @Column(nullable = false)
-    private Date consultModifyDate;
+    private LocalDate consultModifyDate;
+
+    @Column
+    private String takingDrug;
+
 }

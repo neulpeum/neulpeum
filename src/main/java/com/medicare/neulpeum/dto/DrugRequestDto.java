@@ -5,16 +5,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class DrugRequestDto {
 
-    private String drugNameKor;
+    private Long drugId;
+    private String drugName;
+    private LocalDate expireDate;
+    private int stockAmount;
+    private int usableAmount;
+    private int usedAmount;
 
-    public DrugInfo toEntity(String drugNameKor) {
+    public DrugInfo toEntity(DrugRequestDto drugReq) {
         return DrugInfo.builder()
-                .drugNameKor(drugNameKor)
+                .id(drugReq.getDrugId())
+                .drugName(drugReq.getDrugName())
+                .expireDate(drugReq.getExpireDate())
+                .stockAmount(drugReq.getStockAmount())
+                .usableAmount(drugReq.getUsableAmount())
+                .usedAmount(drugReq.getUsedAmount())
                 .build();
     }
 }

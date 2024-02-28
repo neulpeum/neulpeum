@@ -22,10 +22,9 @@ public class DrugServiceImpl implements DrugService{
     DrugRepository drugRepository;
 
     @Override
-    public void save(DrugRequestDto diReq) {
+    public void save(DrugRequestDto drugReq) {
         try {
-            DrugInfo drugInfo = diReq.toEntity(diReq.getDrugNameKor());
-            DrugInfo savedDrugInfo = drugRepository.save(drugInfo);
+            drugRepository.save(drugReq.toEntity(drugReq));
         } catch (Exception e) {
             log.error("DrugInfo 저장 중 오류 발생: {}", e.getMessage());
         }
@@ -36,37 +35,45 @@ public class DrugServiceImpl implements DrugService{
     public List<DrugResponseDto> findAll() {
         List<DrugInfo> drugInfos = drugRepository.findAll();
 
-        List<DrugResponseDto> DrugInfoResponseDtoList =
-                drugInfos.stream().map(drugInfo -> new DrugResponseDto(drugInfo))
-                        .collect(Collectors.toList());
+        List<DrugResponseDto> drugResponseDtoList =
+                drugInfos.stream().map(
+                        drugInfo -> new DrugResponseDto(drugInfo)).collect(Collectors.toList()
+                );
 
-        return DrugInfoResponseDtoList;
+        return drugResponseDtoList;
+    }
+
+
+    @Override
+    public List<DrugResponseDto> findByDrugName(String drugName) {
+        List<DrugInfo> findDrug = drugRepository.findByDrugName(drugName);
+
+        List<DrugResponseDto> drugResponseDtoList = findDrug.stream()
+                .map(drugInfo -> new DrugResponseDto(drugInfo))
+                .collect(Collectors.toList());
+
+        return drugResponseDtoList;
     }
 
     @Override
-    public DrugResponseDto update(long id, DrugRequestDto drugInfoRequestDto) {
-        try {
-            Optional<DrugInfo> drugInfo = drugRepository.findById(id);
-            if (drugInfo.isPresent()) {
-                DrugInfo _druginfo = drugInfo.get();
-                _druginfo.setDrugNameKor(drugInfoRequestDto.getDrugNameKor());
-                return new DrugResponseDto(_druginfo);
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public boolean existsByDrugName(String drugName) {
+        return drugRepository.existsByDrugName(drugName);
     }
 
     @Override
-    public void delete(long id) {
-        try {
-            drugRepository.deleteById(id);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void update(DrugRequestDto drugRequestDto) {
+        Long drugId = drugRequestDto.getDrugId();
+        Optional<DrugInfo> optionalDrug = drugRepository.findById(drugId);
+        if (optionalDrug.isPresent()) {
+            DrugInfo existingDrug = optionalDrug.get();
+            existingDrug.setDrugName(drugRequestDto.getDrugName());
+            existingDrug.setExpireDate(drugRequestDto.getExpireDate());
+            existingDrug.setStockAmount(drugRequestDto.getStockAmount());
+            existingDrug.setUsableAmount(drugRequestDto.getUsableAmount());
+            existingDrug.setUsedAmount(drugRequestDto.getUsedAmount());
+            drugRepository.save(existingDrug);
+        } else {
+            throw new RuntimeException("약물을 찾을 수 없습니다: " + drugId);
         }
     }
 }

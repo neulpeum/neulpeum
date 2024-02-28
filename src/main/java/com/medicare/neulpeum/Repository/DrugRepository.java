@@ -10,4 +10,6 @@ import java.util.List;
 public interface DrugRepository extends JpaRepository<DrugInfo, Long> {
     @Override
     List<DrugInfo> findAll();
+    List<DrugInfo> findByDrugName(String drugName);
+    boolean existsByDrugName(String drugName);
 }
