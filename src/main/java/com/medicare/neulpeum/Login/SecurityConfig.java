@@ -39,7 +39,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
-                                .requestMatchers("/", "/login/**", "/api/patient/**").permitAll()
+                                .requestMatchers("/", "/login/**", "/api/patient/**", "/api/admin/**").permitAll()
                                 .requestMatchers("/drug/**","/api/drug/**").hasRole(Role.ADMIN.name())
                                 .anyRequest().authenticated()
                 )
@@ -48,15 +48,15 @@ public class SecurityConfig {
                 )//401, 403 관련 예외처리
                 .formLogin((formLogin) ->
                         formLogin
-                                .loginPage("/api/login")//로그인 화면 Url
+                                .loginPage("/login")//로그인 화면 Url
                                 .usernameParameter("username")//로그인 아이디 json 키 값
                                 .passwordParameter("password")//로그인 패스워드 json 키 값
-                                .loginProcessingUrl("/api/login/login-proc")//로그인 submit 요청을 받을 url
-                                .defaultSuccessUrl("/api/main/login", true)//로그인에 성공했을 때 이동할 url
+                                .loginProcessingUrl("/login/login-proc")//로그인 submit 요청을 받을 url
+                                .defaultSuccessUrl("/main", true)//로그인에 성공했을 때 이동할 url
 
                 )
                 .logout((logoutConfig) ->
-                        logoutConfig.logoutSuccessUrl("/api/main/logout")//로그아웃에 성공했을 때 이동하는 url
+                        logoutConfig.logoutSuccessUrl("/logout")//로그아웃에 성공했을 때 이동하는 url
                 )
                 .userDetailsService(myUserDetailsService);//"/login/login-proc" 요청을 받으면 userDetailService 로직 수행
 

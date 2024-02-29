@@ -12,10 +12,6 @@ import lombok.*;
 @Table(name = "userInfo")
 public class UserInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "id")
-    private Long id;
-
     @Column(nullable = false)
     private String username;
 
