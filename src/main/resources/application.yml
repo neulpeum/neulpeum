@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/neulpeum
-    username: root
-    password: 1128
+    url: neulpeum.cf4eqms2yqux.ap-northeast-2.rds.amazonaws.com/neulpeum
+    username: admin
+    password: neulpeum123!
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
