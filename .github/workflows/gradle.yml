@@ -19,7 +19,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-	#Secret에 설정해둔 YML파일 (BASE64로 인코딩 되어있어야 함) 설정
+    #Secret에 설정해둔 YML파일 (BASE64로 인코딩 되어있어야 함) 설정
     - name: Set YML
       run: |
         mkdir -p src/main/resources
