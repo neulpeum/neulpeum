@@ -52,7 +52,8 @@ jobs:
 
     # Docker Hub push
     - name: docker Hub push
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGENAME }}
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}
+      # /${{ secrets.DOCKERHUB_IMAGENAME }}
   
   
   
