@@ -19,7 +19,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-	#Secret에 설정해둔 YML파일 (BASE64로 인코딩 되어있어야 함) 설정
+    #Secret에 설정해둔 YML파일 (BASE64로 인코딩 되어있어야 함) 설정
     - name: Set YML
       run: |
         mkdir -p src/main/resources
@@ -39,9 +39,9 @@ jobs:
       
     #------------------- Docker --------------------
 
-    # Docker Image Build
-    - name: Docker Image Build
-      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGENAME }} . 
+    # # Docker Image Build
+    # - name: Docker Image Build
+    #   run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGENAME }} . 
     
     # DockerHub Login
     - name: Docker Hub Login 
