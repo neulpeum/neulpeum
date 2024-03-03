@@ -73,7 +73,8 @@ public class DrugServiceImpl implements DrugService{
             existingDrug.setUsedAmount(drugRequestDto.getUsedAmount());
             drugRepository.save(existingDrug);
         } else {
-            throw new RuntimeException("약물을 찾을 수 없습니다: " + drugId);
+            // 약물을 찾지 못한 경우에도 저장하도록 수정
+            drugRepository.save(drugRequestDto.toEntity(drugRequestDto));
         }
     }
 }
