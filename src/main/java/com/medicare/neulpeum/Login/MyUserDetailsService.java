@@ -24,8 +24,6 @@ public class MyUserDetailsService implements UserDetailsService {
             userInfo = userRepository.findByUsername("user").orElseThrow(() -> new UsernameNotFoundException("없는 회원입니다."));
 
         }
-//        UserInfo userInfo = userRepository.findByPassword(username).orElseThrow(() -> new UsernameNotFoundException("없는 회원입니다."));
-
         return User.builder().username(userInfo.getUsername()).password(userInfo.getPassword()).roles(userInfo.getRole().name()).build();
     }
 }

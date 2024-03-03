@@ -1,6 +1,5 @@
 package com.medicare.neulpeum.dto;
 
-import com.medicare.neulpeum.domain.entity.UserInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,14 +8,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserPasswordUpdateRequestDto {
-    private String username;
-    private String password;
+//    private String username;
 
-    public UserInfo toEntity(UserPasswordUpdateRequestDto upwREQ) {
-     return UserInfo.builder()
-             .username(upwREQ.getUsername())
-             .password(upwREQ.getPassword())
-             .build();
-    }
-
+    //비밀번호 변경에 필요한 request 객체
+    private String currentPassword;
+    private String newPassword;
 }

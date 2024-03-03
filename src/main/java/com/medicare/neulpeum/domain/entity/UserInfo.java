@@ -25,4 +25,8 @@ public class UserInfo {
     public String getRoleKey() {
         return this.role.getKey();
     }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }

@@ -21,16 +21,17 @@ public class UserServiceImpl implements UserService{
     @Override
     public void update(UserPasswordUpdateRequestDto userPasswordUpdateRequestDto) {
         try {
-            Optional<UserInfo> optionalUserInfo = userRepository.findByUsername(userPasswordUpdateRequestDto.getUsername());
+            //입력한 비밀번호로 유저 정보 찾아오기
+            Optional<UserInfo> optionalUserInfo = userRepository.findByPassword(userPasswordUpdateRequestDto.getCurrentPassword());
             if (optionalUserInfo.isPresent()) {
                 UserInfo userInfo = optionalUserInfo.get();
                 //주어진 DTO에서 새로운 정보 추출하여 업데이트
-                userInfo.setPassword(userPasswordUpdateRequestDto.getPassword());
+                userInfo.setPassword(userPasswordUpdateRequestDto.getNewPassword());
 
                 //업데이트 된 정보 저장
                 userRepository.save(userInfo);
             } else {
-                throw new IllegalArgumentException("유저 정보를 찾을 수 없습니다. username:" + userPasswordUpdateRequestDto.getUsername());
+                throw new IllegalArgumentException("유저 정보를 찾을 수 없습니다. username:" + userPasswordUpdateRequestDto.getCurrentPassword());
             }
         } catch (Exception e) {
             log.error("유저 비밀번호 변경 중 오류 발생 {}", e.getMessage());
@@ -41,17 +42,16 @@ public class UserServiceImpl implements UserService{
     @Override
     public void adminUpdate(AdminUpdateRequestDto adminUpdateRequestDto) {
         try {
-            Optional<UserInfo> optionalAdminInfo = userRepository.findByUsername(adminUpdateRequestDto.getUsername());
+            Optional<UserInfo> optionalAdminInfo = userRepository.findByPassword(adminUpdateRequestDto.getCurrentPassword());
             if (optionalAdminInfo.isPresent()) {
                 UserInfo userInfo = optionalAdminInfo.get();
                 //주어진 DTO에서 새로운 정보 추출하여 업데이트
-                userInfo.setUsername(adminUpdateRequestDto.getUsername());
-                userInfo.setPassword(adminUpdateRequestDto.getPassword());
+                userInfo.setPassword(adminUpdateRequestDto.getNewPassword());
 
                 //업데이트 된 정보 저장
                 userRepository.save(userInfo);
             } else {
-                throw new IllegalArgumentException("관리자 정보를 찾을 수 없습니다. username: " + adminUpdateRequestDto.getUsername());
+                throw new IllegalArgumentException("관리자 정보를 찾을 수 없습니다. username: " + adminUpdateRequestDto.getCurrentPassword());
             }
         } catch (Exception e) {
             log.error("관리자 아이디 비밀번호 변경 중 오류 발생 {}", e.getMessage());

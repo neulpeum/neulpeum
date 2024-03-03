@@ -1,7 +1,6 @@
 package com.medicare.neulpeum.Login;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.medicare.neulpeum.domain.entity.Role;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -37,12 +36,12 @@ public class SecurityConfig {
                 .csrf((csrfConfig) ->
                         csrfConfig.disable()
                 )
-                .authorizeHttpRequests((authorizeRequests) ->
-                        authorizeRequests
-                                .requestMatchers("/", "/login/**", "/api/patient/**", "/api/admin/**").permitAll()
-                                .requestMatchers("/drug/**","/api/drug/**").hasRole(Role.ADMIN.name())
-                                .anyRequest().authenticated()
-                )
+//                .authorizeHttpRequests((authorizeRequests) ->
+//                        authorizeRequests
+//                                .requestMatchers("/", "/login/**", "/api/patient/**", "/api/admin/**").permitAll()
+//                                .requestMatchers("/drug/**","/api/drug/**").hasRole(Role.ADMIN.name())
+//                                .anyRequest().authenticated()
+//                )
                 .exceptionHandling((exceptionConfig) ->
                         exceptionConfig.authenticationEntryPoint(unauthorizedEntryPoint).accessDeniedHandler(accessDeniedHandler)
                 )//401, 403 관련 예외처리
