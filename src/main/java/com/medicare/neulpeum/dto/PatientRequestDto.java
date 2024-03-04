@@ -12,15 +12,13 @@ public class PatientRequestDto {
     private String patientName;
     private String address;
     private String disease;
-    private String takingDrug;
     private String specialReport;
 
-    public PatientInfo toEntity(String patientName, String address, String disease, String takingDrug, String specialReport) {
+    public PatientInfo toEntity(String patientName, String address, String disease, String specialReport) {
         return PatientInfo.builder()
                 .patientName(patientName)
                 .address(address)
                 .disease(disease)
-                .takingDrug(takingDrug)
                 .specialReport(specialReport)
                 .build();
     }
