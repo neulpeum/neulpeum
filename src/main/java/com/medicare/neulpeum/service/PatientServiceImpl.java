@@ -27,7 +27,6 @@ public class PatientServiceImpl implements PatientService {
                     patientReq.getPatientName(),
                     patientReq.getAddress(),
                     patientReq.getDisease(),
-                    patientReq.getTakingDrug(),
                     patientReq.getSpecialReport());
             PatientInfo savedPatientInfo = patientRepository.save(patientInfo);
         } catch (Exception e) {
@@ -75,7 +74,6 @@ public class PatientServiceImpl implements PatientService {
                 patientInfo.setPhoneNum(patientDetailRequestDto.getPhoneNum());
                 patientInfo.setAddress(patientDetailRequestDto.getAddress());
                 patientInfo.setDisease(patientDetailRequestDto.getDisease());
-                patientInfo.setTakingDrug(patientDetailRequestDto.getTakingDrug());
                 patientInfo.setSpecialReport(patientDetailRequestDto.getSpecialReport());
                 // 업데이트된 정보 저장
                 patientRepository.save(patientInfo);

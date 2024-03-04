@@ -18,7 +18,6 @@ public class PatientDetailRequestDto {
     private String phoneNum;
     private String address;
     private String disease;
-    private String takingDrug;
     private String specialReport;
 
     public PatientInfo toEntity(PatientDetailRequestDto pdReq) {
@@ -29,7 +28,6 @@ public class PatientDetailRequestDto {
                 .phoneNum(pdReq.getPhoneNum())
                 .address(pdReq.getAddress())
                 .disease(pdReq.getDisease())
-                .takingDrug(pdReq.getTakingDrug())
                 .specialReport(pdReq.getSpecialReport())
                 .build();
     }
