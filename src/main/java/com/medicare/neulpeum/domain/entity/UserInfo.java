@@ -2,6 +2,7 @@ package com.medicare.neulpeum.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Setter
@@ -20,13 +21,18 @@ public class UserInfo {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private Authority authority;
 
-    public String getRoleKey() {
-        return this.role.getKey();
+    public UserInfo encodePassword(PasswordEncoder passwordEncoder){
+        password = passwordEncoder.encode(password);
+        return this;
     }
 
-    public void updatePassword(String newPassword) {
-        this.password = newPassword;
+    public void updatePassword(PasswordEncoder passwordEncoder, String password){
+        this.password = passwordEncoder.encode(password);
+    }
+
+    public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword){
+        return passwordEncoder.matches(checkPassword, getPassword());
     }
 }
