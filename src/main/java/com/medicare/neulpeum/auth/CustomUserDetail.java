@@ -11,7 +11,7 @@ import java.util.Collection;
 @Getter
 public class CustomUserDetail implements UserDetails {
 
-    private UserInfo userInfo;
+    private final UserInfo userInfo;
 
     public CustomUserDetail(UserInfo userInfo) {
         this.userInfo = userInfo;

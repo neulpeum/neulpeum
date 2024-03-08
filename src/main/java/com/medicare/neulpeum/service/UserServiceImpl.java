@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService{
                 //업데이트 된 정보 저장
                 userRepository.save(userInfo);
             } else {
-                throw new IllegalArgumentException("유저 정보를 찾을 수 없습니다. username:" + userPasswordUpdateRequestDto.getCurrentPassword());
+                throw new IllegalArgumentException("비밀번호에 일치하는 유저가 존재하지 않습니다. 입력한 password : " + userPasswordUpdateRequestDto.getCurrentPassword());
             }
         } catch (Exception e) {
             log.error("유저 비밀번호 변경 중 오류 발생 {}", e.getMessage());
@@ -51,10 +51,10 @@ public class UserServiceImpl implements UserService{
                 //업데이트 된 정보 저장
                 userRepository.save(userInfo);
             } else {
-                throw new IllegalArgumentException("관리자 정보를 찾을 수 없습니다. username: " + adminUpdateRequestDto.getCurrentPassword());
+                throw new IllegalArgumentException("입력한 비밀번호에 일치하는 관리자 정보를 찾을 수 없습니다. 입력한 password : " + adminUpdateRequestDto.getCurrentPassword());
             }
         } catch (Exception e) {
-            log.error("관리자 아이디 비밀번호 변경 중 오류 발생 {}", e.getMessage());
+            log.error("관리자 비밀번호 변경 중 오류 발생 {}", e.getMessage());
             throw new RuntimeException("관리자 비밀번호 변경 중 오류 발생" + e.getMessage());
         }
     }

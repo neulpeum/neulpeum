@@ -2,7 +2,6 @@ package com.medicare.neulpeum.service;
 
 import com.medicare.neulpeum.Repository.UserRepository;
 import com.medicare.neulpeum.auth.CustomUserDetail;
-import com.medicare.neulpeum.domain.entity.Authority;
 import com.medicare.neulpeum.domain.entity.UserInfo;
 import com.medicare.neulpeum.dto.UserRequestDto;
 import jakarta.servlet.http.Cookie;
@@ -67,7 +66,7 @@ public class CustomUserDetailService implements UserDetailsService {
         try {
             return authenticationManager.authenticate(authentication);
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid email or password");
+            throw new BadCredentialsException("Invalid username or password");
         }
     }
 
@@ -84,15 +83,5 @@ public class CustomUserDetailService implements UserDetailsService {
         cookie.setPath("/");
         cookie.setMaxAge(30000 * 60);
         response.addCookie(cookie);
-    }
-
-    public void signUpUser(UserRequestDto requestDto) {
-        UserInfo userInfo = UserInfo.builder()
-                .username(requestDto.getUsername())
-                .password(passwordEncoder.encode(requestDto.getPassword()))
-                .authority(Authority.ROLE_USER)
-                .build();
-
-        userRepository.save(userInfo);
     }
 }
