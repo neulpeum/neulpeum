@@ -39,7 +39,7 @@ public class CustomUserDetailService implements UserDetailsService {
     }
 
     //시큐리티 내부의 로그인 프로세스중 인증처리를 하는 메소드 중 하나
-    //이 메서드를 오버라이드하여 데이터베이스의 유저 정보를 가져와서
+    //이 메서드를 오버라이드하여 데이터베이스의 유저 정보를 가져옴
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserInfo userInfo = userRepository.findByUsername(username).orElse(null);
@@ -56,24 +56,27 @@ public class CustomUserDetailService implements UserDetailsService {
                       UserRequestDto requestDto) {
         Authentication authentication = authenticateUser(requestDto.getUsername(), requestDto.getPassword());
         setAuthenticationInContext(authentication);
-        createSessionAndSetCookie(request, response);
+        createSessionAndSetCookie(request, response);//세션생성 & 쿠키설정하여 사용자 세션 유지
     }
 
+    //사용자 인증
     private Authentication authenticateUser(String username, String password) {
         UserDetails userDetails = loadUserByUsername(username);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, password, new ArrayList<>());
 
         try {
-            return authenticationManager.authenticate(authentication);
+            return authenticationManager.authenticate(authentication);//인증시도
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username or password");
+            throw new BadCredentialsException("Invalid username or password!");
         }
     }
 
+    // 전달된 인증 객체를 SecurityContextHolder에 저장하여 현재 사용자의 인증 정보를 유지
     private void setAuthenticationInContext(Authentication authentication) {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
+    // 현재 요청에 대한 세션을 생성하고, 생성된 세션을 사용하여 클라이언트에게 쿠키를 설정
     private void createSessionAndSetCookie(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
