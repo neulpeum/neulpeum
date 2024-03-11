@@ -7,6 +7,7 @@ import com.medicare.neulpeum.dto.UserPasswordUpdateRequestDto;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,19 +18,31 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public void update(UserPasswordUpdateRequestDto userPasswordUpdateRequestDto) {
         try {
-            //입력한 비밀번호로 유저 정보 찾아오기
-            Optional<UserInfo> optionalUserInfo = userRepository.findByPassword(userPasswordUpdateRequestDto.getCurrentPassword());
+            // 입력한 비밀번호를 암호화하여 유저 정보 찾아오기
+            String encryptedCurrentPassword = passwordEncoder.encode(userPasswordUpdateRequestDto.getCurrentPassword());
+            System.out.println(encryptedCurrentPassword);
+            Optional<UserInfo> optionalUserInfo = userRepository.findByPassword(encryptedCurrentPassword);
             if (optionalUserInfo.isPresent()) {
                 UserInfo userInfo = optionalUserInfo.get();
-                //주어진 DTO에서 새로운 정보 추출하여 업데이트
-                userInfo.setPassword(userPasswordUpdateRequestDto.getNewPassword());
+                // DB에서 가져온 암호화된 비밀번호와 입력한 암호화된 비밀번호 비교
+                if (passwordEncoder.matches(userPasswordUpdateRequestDto.getCurrentPassword(), userInfo.getPassword())) {
+                    // 주어진 DTO에서 새로운 비밀번호 추출하여 업데이트
+                    userInfo.updatePassword(passwordEncoder, userPasswordUpdateRequestDto.getNewPassword());
 
-                //업데이트 된 정보 저장
-                userRepository.save(userInfo);
+                    // 업데이트 된 정보 저장
+                    userRepository.save(userInfo);
+                } else {
+                    throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+                }
             } else {
                 throw new IllegalArgumentException("비밀번호에 일치하는 유저가 존재하지 않습니다. 입력한 password : " + userPasswordUpdateRequestDto.getCurrentPassword());
             }
@@ -46,7 +59,7 @@ public class UserServiceImpl implements UserService{
             if (optionalAdminInfo.isPresent()) {
                 UserInfo userInfo = optionalAdminInfo.get();
                 //주어진 DTO에서 새로운 정보 추출하여 업데이트
-                userInfo.setPassword(adminUpdateRequestDto.getNewPassword());
+                userInfo.updatePassword(passwordEncoder, adminUpdateRequestDto.getNewPassword());
 
                 //업데이트 된 정보 저장
                 userRepository.save(userInfo);
