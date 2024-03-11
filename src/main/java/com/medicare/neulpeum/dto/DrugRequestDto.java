@@ -15,18 +15,14 @@ public class DrugRequestDto {
     private Long drugId;
     private String drugName;
     private LocalDate expireDate;
-    private int stockAmount;
     private int usableAmount;
-    private int usedAmount;
 
     public DrugInfo toEntity(DrugRequestDto drugReq) {
         return DrugInfo.builder()
                 .id(drugReq.getDrugId())
                 .drugName(drugReq.getDrugName())
                 .expireDate(drugReq.getExpireDate())
-                .stockAmount(drugReq.getStockAmount())
                 .usableAmount(drugReq.getUsableAmount())
-                .usedAmount(drugReq.getUsedAmount())
                 .build();
     }
 }
