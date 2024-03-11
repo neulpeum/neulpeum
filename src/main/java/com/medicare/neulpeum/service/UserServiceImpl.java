@@ -7,6 +7,7 @@ import com.medicare.neulpeum.dto.UserPasswordUpdateRequestDto;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,21 +18,34 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public void update(UserPasswordUpdateRequestDto userPasswordUpdateRequestDto) {
         try {
-            //입력한 비밀번호로 유저 정보 찾아오기
-            Optional<UserInfo> optionalUserInfo = userRepository.findByPassword(userPasswordUpdateRequestDto.getCurrentPassword());
+            // 입력한 비밀번호를 암호화하여 유저 정보 찾아오기
+            String encryptedCurrentPassword = passwordEncoder.encode(userPasswordUpdateRequestDto.getCurrentPassword());
+            System.out.println(encryptedCurrentPassword);
+            //currentPassword를 encoding하면 DB에 담겨있는 암호화된 비밀번호와 달라서 username으로 DB에서 찾아와야함
+            Optional<UserInfo> optionalUserInfo = userRepository.findByUsername("user");
             if (optionalUserInfo.isPresent()) {
                 UserInfo userInfo = optionalUserInfo.get();
-                //주어진 DTO에서 새로운 정보 추출하여 업데이트
-                userInfo.setPassword(userPasswordUpdateRequestDto.getNewPassword());
+                // DB에서 가져온 암호화된 비밀번호와 입력한 암호화된 비밀번호 비교
+                if (passwordEncoder.matches(userPasswordUpdateRequestDto.getCurrentPassword(), userInfo.getPassword())) {
+                    // 주어진 DTO에서 새로운 비밀번호 추출하여 업데이트
+                    userInfo.updatePassword(passwordEncoder, userPasswordUpdateRequestDto.getNewPassword());
 
-                //업데이트 된 정보 저장
-                userRepository.save(userInfo);
+                    // 업데이트 된 정보 저장
+                    userRepository.save(userInfo);
+                } else {
+                    throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+                }
             } else {
-                throw new IllegalArgumentException("유저 정보를 찾을 수 없습니다. username:" + userPasswordUpdateRequestDto.getCurrentPassword());
+                throw new IllegalArgumentException("username이 user인 계정이 존재하지 않습니다.");
             }
         } catch (Exception e) {
             log.error("유저 비밀번호 변경 중 오류 발생 {}", e.getMessage());
@@ -42,20 +56,29 @@ public class UserServiceImpl implements UserService{
     @Override
     public void adminUpdate(AdminUpdateRequestDto adminUpdateRequestDto) {
         try {
-            Optional<UserInfo> optionalAdminInfo = userRepository.findByPassword(adminUpdateRequestDto.getCurrentPassword());
-            if (optionalAdminInfo.isPresent()) {
-                UserInfo userInfo = optionalAdminInfo.get();
-                //주어진 DTO에서 새로운 정보 추출하여 업데이트
-                userInfo.setPassword(adminUpdateRequestDto.getNewPassword());
+            // 입력한 비밀번호를 암호화하여 유저 정보 찾아오기
+            String encryptedCurrentPassword = passwordEncoder.encode(adminUpdateRequestDto.getCurrentPassword());
+            System.out.println(encryptedCurrentPassword);
+            //currentPassword를 encoding하면 DB에 담겨있는 암호화된 비밀번호와 달라서 username으로 DB에서 찾아와야함
+            Optional<UserInfo> optionalUserInfo = userRepository.findByUsername("admin");
+            if (optionalUserInfo.isPresent()) {
+                UserInfo userInfo = optionalUserInfo.get();
+                // DB에서 가져온 암호화된 비밀번호와 입력한 암호화된 비밀번호 비교
+                if (passwordEncoder.matches(adminUpdateRequestDto.getCurrentPassword(), userInfo.getPassword())) {
+                    // 주어진 DTO에서 새로운 비밀번호 추출하여 업데이트
+                    userInfo.updatePassword(passwordEncoder, adminUpdateRequestDto.getNewPassword());
 
-                //업데이트 된 정보 저장
-                userRepository.save(userInfo);
+                    // 업데이트 된 정보 저장
+                    userRepository.save(userInfo);
+                } else {
+                    throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+                }
             } else {
-                throw new IllegalArgumentException("관리자 정보를 찾을 수 없습니다. username: " + adminUpdateRequestDto.getCurrentPassword());
+                throw new IllegalArgumentException("username이 admin인 계정이 존재하지 않습니다.");
             }
         } catch (Exception e) {
-            log.error("관리자 아이디 비밀번호 변경 중 오류 발생 {}", e.getMessage());
-            throw new RuntimeException("관리자 비밀번호 변경 중 오류 발생" + e.getMessage());
+            log.error("관리자 비밀번호 변경 중 오류 발생 {}", e.getMessage());
+            throw new RuntimeException("관리자 비밀번호 변경 중 오류 발생 " + e.getMessage());
         }
     }
 }
