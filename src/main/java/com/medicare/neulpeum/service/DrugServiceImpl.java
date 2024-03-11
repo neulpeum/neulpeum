@@ -68,9 +68,7 @@ public class DrugServiceImpl implements DrugService{
             DrugInfo existingDrug = optionalDrug.get();
             existingDrug.setDrugName(drugRequestDto.getDrugName());
             existingDrug.setExpireDate(drugRequestDto.getExpireDate());
-            existingDrug.setStockAmount(drugRequestDto.getStockAmount());
             existingDrug.setUsableAmount(drugRequestDto.getUsableAmount());
-            existingDrug.setUsedAmount(drugRequestDto.getUsedAmount());
             drugRepository.save(existingDrug);
         } else {
             // 약물을 찾지 못한 경우에도 저장하도록 수정
