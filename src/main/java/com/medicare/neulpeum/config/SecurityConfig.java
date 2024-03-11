@@ -33,7 +33,8 @@ public class SecurityConfig {
                 // 그 외 모든 요청 (any) 에 대해서는 인증 요구
                 .authorizeHttpRequests((authorizeRequest) ->
                         authorizeRequest
-                                .requestMatchers("/api/login", "/api/**").permitAll()
+                                .requestMatchers("/api/login").permitAll()
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
 
