@@ -15,7 +15,6 @@ public class PatientResponseDto {
     private String patientName;
     private String address;
     private String disease;
-    private String takingDrug;
     private String specialReport;
 
     public PatientResponseDto(PatientInfo patientInfo) {
@@ -23,7 +22,6 @@ public class PatientResponseDto {
         this.patientName = patientInfo.getPatientName();
         this.address = patientInfo.getAddress();
         this.disease = patientInfo.getDisease();
-        this.takingDrug = patientInfo.getTakingDrug();
         this.specialReport = patientInfo.getSpecialReport();
     }
 }
