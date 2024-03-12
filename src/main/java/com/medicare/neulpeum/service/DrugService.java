@@ -9,6 +9,6 @@ public interface DrugService {
     void save(DrugRequestDto drugRequestDto);
     List<DrugResponseDto> findAll();
     List<DrugResponseDto> findByDrugName(String drugName);
-    boolean existsByDrugName(String drugName);
+    boolean existsByDrugId(Long id);
     void update(DrugRequestDto drugRequestDto);
 }
