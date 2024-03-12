@@ -56,8 +56,8 @@ public class DrugServiceImpl implements DrugService{
     }
 
     @Override
-    public boolean existsByDrugName(String drugName) {
-        return drugRepository.existsByDrugName(drugName);
+    public boolean existsByDrugId(Long id) {
+        return drugRepository.existsById(id);
     }
 
     @Override
