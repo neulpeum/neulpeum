@@ -22,7 +22,7 @@ public class DrugController {
         try {
             for (DrugRequestDto drugRequestDto : drugRequestDtoList) {
                 // 해당 약물 정보가 이미 존재하는지 확인
-                if (drugService.existsByDrugName(drugRequestDto.getDrugName())) {
+                if (drugService.existsByDrugId(drugRequestDto.getDrugId())) {
                     // 이미 존재하는 경우에는 업데이트 수행
                     drugService.update(drugRequestDto);
                 } else {
