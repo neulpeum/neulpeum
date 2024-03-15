@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -19,8 +20,8 @@ public class PatientDetailResponseDto {
     private String address;
     private String disease;
     private String specialReport;
-    private LocalDate patientEnrollDate;
-    private LocalDate patientModifyDate;
+    private String patientEnrollDate;
+    private String patientModifyDate;
 
     public PatientDetailResponseDto(PatientInfo patientInfo) {
         this.patientId = patientInfo.getId();

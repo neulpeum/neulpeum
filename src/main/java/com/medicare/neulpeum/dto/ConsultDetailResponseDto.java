@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -15,14 +16,14 @@ import java.util.Date;
 public class ConsultDetailResponseDto {
     private String patientName;
     private String providerName;
-    private LocalDate consultDate;
+    private String consultDate;
     private String consultContent;
     private String takingDrug;
 
     public ConsultDetailResponseDto(ConsultContentInfo consultContentInfo) {
         this.patientName = consultContentInfo.getPatientId().getPatientName();
         this.providerName = consultContentInfo.getProviderName();
-        this.consultDate = consultContentInfo.getConsultDate();
+        this.consultDate = consultContentInfo.getCreatedAt();
         this.consultContent = consultContentInfo.getConsultContent();
         this.takingDrug = consultContentInfo.getTakingDrug();
     }

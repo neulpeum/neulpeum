@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,8 +17,8 @@ public class DrugResponseDto {
     private String drugName;
     private LocalDate expireDate;
     private int usableAmount;
-    private LocalDate drugEnrollTime;
-    private LocalDate drugModifiedTime;
+    private String drugEnrollTime;
+    private String drugModifiedTime;
 
     public DrugResponseDto(DrugInfo drugInfo) {
         this.drugId = drugInfo.getId();

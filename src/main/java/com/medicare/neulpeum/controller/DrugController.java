@@ -47,11 +47,11 @@ public class DrugController {
         return ResponseEntity.ok(drugResponseDtoList);
     }
 
-    // 약 재고 검색 기능
-    @GetMapping("/findDrug")
-    public ResponseEntity<List<DrugResponseDto>> findDrugInfo(@RequestParam String drugName) {
-        List<DrugResponseDto> drugResponseDtoList = drugService.findByDrugName(drugName);
-
-        return ResponseEntity.ok(drugResponseDtoList);
-    }
+    // 약 재고 검색 기능 - 미사용
+//    @GetMapping("/findDrug")
+//    public ResponseEntity<List<DrugResponseDto>> findDrugInfo(@RequestParam String drugName) {
+//        List<DrugResponseDto> drugResponseDtoList = drugService.findByDrugName(drugName);
+//
+//        return ResponseEntity.ok(drugResponseDtoList);
+//    }
 }
