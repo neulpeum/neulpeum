@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class ConsultUpdateRequestDto {
     private Long consultId;
-    private LocalDate consultDate;
     private String providerName;
     private String consultContent;
     private String takingDrug;
@@ -20,7 +20,6 @@ public class ConsultUpdateRequestDto {
     public ConsultContentInfo toEntity(ConsultUpdateRequestDto cuReq) {
         return ConsultContentInfo.builder()
                 .consultId(cuReq.getConsultId())
-                .consultDate(cuReq.getConsultDate())
                 .providerName(cuReq.getProviderName())
                 .consultContent(cuReq.getConsultContent())
                 .takingDrug(cuReq.getTakingDrug())

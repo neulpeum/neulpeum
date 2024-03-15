@@ -7,9 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.util.Date;
-
-import static jakarta.persistence.FetchType.LAZY;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -33,7 +31,7 @@ public class DrugInfo extends BaseTimeEntity {
 
     @CreatedDate
     @Column(nullable = false)
-    private LocalDate stockDate; // 입고 날짜
+    private LocalDateTime stockDate; // 입고 날짜
 
     @Column(nullable = false)
     private Integer usableAmount;
