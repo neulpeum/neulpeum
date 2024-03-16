@@ -38,6 +38,10 @@ public class SecurityConfig {
                                 .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                                 .anyRequest().authenticated()
                 )
+                .exceptionHandling(e -> e
+                        .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+                        .accessDeniedHandler(new JwtAccessDenyHandler())
+                )
 
                 // Rest 방식으로 로그인을 할 것이므로 form 로그인 사용 안함
                 .formLogin(AbstractHttpConfigurer::disable)
