@@ -34,8 +34,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeRequest) ->
                         authorizeRequest
                                 .requestMatchers("/api/login").permitAll()
-                                .requestMatchers("/accountSettings").hasAuthority("ROLE_ADMIN")
-                                .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/accountSettings", "/drugs").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/api/admin/**", "/api/drug").hasAuthority("ROLE_ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling(e -> e
