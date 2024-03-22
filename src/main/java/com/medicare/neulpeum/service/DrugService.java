@@ -1,5 +1,6 @@
 package com.medicare.neulpeum.service;
 
+import com.medicare.neulpeum.dto.DrugNameResponseDto;
 import com.medicare.neulpeum.dto.DrugRequestDto;
 import com.medicare.neulpeum.dto.DrugResponseDto;
 
@@ -11,4 +12,6 @@ public interface DrugService {
     List<DrugResponseDto> findByDrugName(String drugName);
     boolean existsByDrugId(Long id);
     void update(DrugRequestDto drugRequestDto);
+
+    List<DrugNameResponseDto> getDistinctDrugNames();
 }

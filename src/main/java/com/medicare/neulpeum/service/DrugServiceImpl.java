@@ -2,6 +2,7 @@ package com.medicare.neulpeum.service;
 
 import com.medicare.neulpeum.Repository.DrugRepository;
 import com.medicare.neulpeum.domain.entity.DrugInfo;
+import com.medicare.neulpeum.dto.DrugNameResponseDto;
 import com.medicare.neulpeum.dto.DrugRequestDto;
 import com.medicare.neulpeum.dto.DrugResponseDto;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,6 @@ public class DrugServiceImpl implements DrugService{
         return drugResponseDtoList;
     }
 
-
     @Override
     public List<DrugResponseDto> findByDrugName(String drugName) {
         List<DrugInfo> findDrug = drugRepository.findByDrugName(drugName);
@@ -75,4 +75,16 @@ public class DrugServiceImpl implements DrugService{
             drugRepository.save(drugRequestDto.toEntity(drugRequestDto));
         }
     }
+
+    @Override
+    public List<DrugNameResponseDto> getDistinctDrugNames() {
+        List<String> distinctDrugNames = drugRepository.findDistinctDrugNames();
+
+        List<DrugNameResponseDto> drugNameResponseDtoList = distinctDrugNames.stream()
+                .map(DrugNameResponseDto::new)
+                .collect(Collectors.toList());
+        return drugNameResponseDtoList;
+    }
+
+
 }

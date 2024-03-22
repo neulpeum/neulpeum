@@ -1,11 +1,9 @@
 package com.medicare.neulpeum.controller;
 
 import com.medicare.neulpeum.domain.entity.PatientInfo;
-import com.medicare.neulpeum.dto.ConsultDetailResponseDto;
-import com.medicare.neulpeum.dto.ConsultRequestDto;
-import com.medicare.neulpeum.dto.ConsultResponseDto;
-import com.medicare.neulpeum.dto.ConsultUpdateRequestDto;
+import com.medicare.neulpeum.dto.*;
 import com.medicare.neulpeum.service.ConsultService;
+import com.medicare.neulpeum.service.DrugService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConsultController {
     private final ConsultService consultService;
+    private final DrugService drugService;
 
     //주민 상담 내용 추가
     @PostMapping("/patient/consult")
@@ -29,6 +28,14 @@ public class ConsultController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("consult content 저장 중 오류 발생 " + e.getMessage());
         }
     }
+
+    //주민 상담 내용 작성 시 중복 제거된 약 이름 리스트 & 재고 조회(추후 구현)
+    @GetMapping("/patient/drug")
+    public List<DrugNameResponseDto> getDistinctDrugNames() {
+        return drugService.getDistinctDrugNames();
+    }
+
+
 
     //주민 상담 내역 조회(상담 리스트 조회)
     @GetMapping("/patient/consult")
