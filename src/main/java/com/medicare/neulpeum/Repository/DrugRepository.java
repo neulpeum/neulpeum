@@ -13,7 +13,7 @@ public interface DrugRepository extends JpaRepository<DrugInfo, Long> {
     List<DrugInfo> findAll();
     List<DrugInfo> findByDrugName(String drugName);
     boolean existsById(Long id);
+    @Query("SELECT d.drugName, SUM(d.usableAmount) AS totalUsableAmount FROM DrugInfo d GROUP BY d.drugName")
+    List<Object[]> findDistinctDrugNameAndTotalDrugAmount();
 
-    @Query("SELECT DISTINCT d.drugName FROM DrugInfo d")
-    List<String> findDistinctDrugNames();
 }

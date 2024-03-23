@@ -7,10 +7,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DrugNameResponseDto {
+public class DrugNameAndAmountResponseDto {
     private String drugName;
+    private Long totalUsableAmount;
 
-    public DrugNameResponseDto(String drugName) {
+    public DrugNameAndAmountResponseDto(String drugName, Long totalUsableAmount) {
         this.drugName = drugName;
+        this.totalUsableAmount = totalUsableAmount;
     }
+
 }

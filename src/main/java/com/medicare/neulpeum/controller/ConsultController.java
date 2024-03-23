@@ -29,14 +29,6 @@ public class ConsultController {
         }
     }
 
-    //주민 상담 내용 작성 시 중복 제거된 약 이름 리스트 & 재고 조회(추후 구현)
-    @GetMapping("/patient/drug")
-    public List<DrugNameResponseDto> getDistinctDrugNames() {
-        return drugService.getDistinctDrugNames();
-    }
-
-
-
     //주민 상담 내역 조회(상담 리스트 조회)
     @GetMapping("/patient/consult")
     public ResponseEntity<List<ConsultResponseDto>> getConsult(@RequestParam PatientInfo patientId) {
