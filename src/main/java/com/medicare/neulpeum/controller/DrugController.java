@@ -1,5 +1,6 @@
 package com.medicare.neulpeum.controller;
 
+import com.medicare.neulpeum.dto.DrugNameAndAmountResponseDto;
 import com.medicare.neulpeum.dto.DrugRequestDto;
 import com.medicare.neulpeum.dto.DrugResponseDto;
 import com.medicare.neulpeum.service.DrugService;
@@ -54,4 +55,11 @@ public class DrugController {
 //
 //        return ResponseEntity.ok(drugResponseDtoList);
 //    }
+
+    // 중복 제거된 이름 및 총 재고량 조회
+    @GetMapping("/patient/drug")
+    public ResponseEntity<List<DrugNameAndAmountResponseDto>> getDistinctDrugNameAndTotalUsableAmount() {
+        List<DrugNameAndAmountResponseDto> drugNameAndAmountResponseDtoList = drugService.getDistinctDrugNameAndTotalUsableAmount();
+        return ResponseEntity.ok(drugNameAndAmountResponseDtoList);
+    }
 }

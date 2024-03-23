@@ -13,4 +13,5 @@ public interface ConsultService {
     ConsultDetailResponseDto findByConsultId(Long consultId);
 
     void update(ConsultUpdateRequestDto consultUpdateRequestDto);
+
 }
