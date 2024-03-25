@@ -3,6 +3,7 @@ package com.medicare.neulpeum.service;
 import com.medicare.neulpeum.dto.DrugNameAndAmountResponseDto;
 import com.medicare.neulpeum.dto.DrugRequestDto;
 import com.medicare.neulpeum.dto.DrugResponseDto;
+import com.medicare.neulpeum.dto.DrugUpdateRequestDto;
 
 import java.util.List;
 
@@ -13,5 +14,6 @@ public interface DrugService {
     boolean existsByDrugId(Long id);
     void update(DrugRequestDto drugRequestDto);
     List<DrugNameAndAmountResponseDto> getDistinctDrugNameAndTotalUsableAmount();
+    void updateUsedDrug(DrugUpdateRequestDto drugUpdateRequestDto);
 
 }
