@@ -15,5 +15,6 @@ public interface DrugRepository extends JpaRepository<DrugInfo, Long> {
     boolean existsById(Long id);
     @Query("SELECT d.drugName, SUM(d.usableAmount) AS totalUsableAmount FROM DrugInfo d GROUP BY d.drugName")
     List<Object[]> findDistinctDrugNameAndTotalDrugAmount();
+    List<DrugInfo> findByDrugNameOrderByExpireDateAsc(String drugName);
 
 }
