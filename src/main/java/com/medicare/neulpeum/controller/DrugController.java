@@ -1,7 +1,9 @@
 package com.medicare.neulpeum.controller;
 
+import com.medicare.neulpeum.dto.DrugNameAndAmountResponseDto;
 import com.medicare.neulpeum.dto.DrugRequestDto;
 import com.medicare.neulpeum.dto.DrugResponseDto;
+import com.medicare.neulpeum.dto.DrugUpdateRequestDto;
 import com.medicare.neulpeum.service.DrugService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -54,4 +56,22 @@ public class DrugController {
 //
 //        return ResponseEntity.ok(drugResponseDtoList);
 //    }
+
+    // 중복 제거된 이름 및 총 재고량 조회
+    @GetMapping("/patient/drug")
+    public ResponseEntity<List<DrugNameAndAmountResponseDto>> getDistinctDrugNameAndTotalUsableAmount() {
+        List<DrugNameAndAmountResponseDto> drugNameAndAmountResponseDtoList = drugService.getDistinctDrugNameAndTotalUsableAmount();
+        return ResponseEntity.ok(drugNameAndAmountResponseDtoList);
+    }
+
+    // 상담시 제공한 약 재고 업데이트
+    @PatchMapping("/patient/drug")
+    public ResponseEntity<?> updateUsedDrug(@RequestBody List<DrugUpdateRequestDto> drugUpdateRequestDtoList) {
+        try {
+            drugService.updateUsedDrug(drugUpdateRequestDtoList);
+            return ResponseEntity.ok("약 재고 업데이트 완료");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("약 재고 업데이트 중 오류 발생 : " + e.getMessage());
+        }
+    }
 }

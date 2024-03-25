@@ -1,11 +1,9 @@
 package com.medicare.neulpeum.controller;
 
 import com.medicare.neulpeum.domain.entity.PatientInfo;
-import com.medicare.neulpeum.dto.ConsultDetailResponseDto;
-import com.medicare.neulpeum.dto.ConsultRequestDto;
-import com.medicare.neulpeum.dto.ConsultResponseDto;
-import com.medicare.neulpeum.dto.ConsultUpdateRequestDto;
+import com.medicare.neulpeum.dto.*;
 import com.medicare.neulpeum.service.ConsultService;
+import com.medicare.neulpeum.service.DrugService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConsultController {
     private final ConsultService consultService;
+    private final DrugService drugService;
 
     //주민 상담 내용 추가
     @PostMapping("/patient/consult")
