@@ -14,6 +14,6 @@ public interface DrugService {
     boolean existsByDrugId(Long id);
     void update(DrugRequestDto drugRequestDto);
     List<DrugNameAndAmountResponseDto> getDistinctDrugNameAndTotalUsableAmount();
-    void updateUsedDrug(DrugUpdateRequestDto drugUpdateRequestDto);
+    void updateUsedDrug(List<DrugUpdateRequestDto> drugUpdateRequestDto);
 
 }
