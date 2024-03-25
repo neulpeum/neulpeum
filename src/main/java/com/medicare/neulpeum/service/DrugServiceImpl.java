@@ -87,34 +87,34 @@ public class DrugServiceImpl implements DrugService{
     }
 
     @Override
-    public void updateUsedDrug(DrugUpdateRequestDto drugUpdateRequestDto) {
+    public void updateUsedDrug(List<DrugUpdateRequestDto> drugUpdateRequestDtoList) {
         try {
-            //약 이름으로 유통기한이 가장 짧은 것을 DB에서 조회
-            List<DrugInfo> drugs = drugRepository.findByDrugNameOrderByExpireDateAsc(drugUpdateRequestDto.getDrugName());
+            for (DrugUpdateRequestDto updateRequestDto : drugUpdateRequestDtoList) {
+                String drugName = updateRequestDto.getDrugName();
+                int usedAmount = updateRequestDto.getUsedAmount();
 
-            if (drugs.isEmpty()) {
-                throw new IllegalArgumentException(drugUpdateRequestDto.getDrugName() + " 해당 약이 존재하지 않습니다.");
+                //약 이름으로 유통기한이 가장 짧은 것을 DB에서 조회
+                List<DrugInfo> drugs = drugRepository.findByDrugNameOrderByExpireDateAsc(drugName);
+
+                int remainingAmount = usedAmount;
+                for (DrugInfo drug : drugs) {
+                    int usableAmount = drug.getUsableAmount();
+                    if (usableAmount >= remainingAmount) {
+                        drug.setUsableAmount(usableAmount - remainingAmount);
+                        drugRepository.save(drug);
+                        break;
+                    } else {
+                        //사용 가능한 개수가 사용하려는 개수보다 적은 경우 약 재고를 0개로 변경 후
+                        //다음으로 유통기한이 짧은 약 재고에서 마저 빠져나가야 하는 개수를 뺄 수 있도록 반복문 계속
+                        remainingAmount -= usableAmount;
+                        drug.setUsableAmount(0);
+                        drugRepository.save(drug);
+                    }
+                }
             }
-
-            //유통기한이 가장 적게 남은 약을 가져옴
-            DrugInfo upToDateDrug = drugs.get(0);
-            int usedAmount = drugUpdateRequestDto.getUsedAmount();
-            int usableAmount = upToDateDrug.getUsableAmount();
-
-            //사용 가능 개수보다 사용 개수가 더 많을 경우 (나중에 그 다음으로 빠른 유통기한 재고에서 빠져나갈 수 있도록 수정)
-            if (usableAmount < usedAmount) {
-                throw new IllegalArgumentException("약 재고가 부족합니다. 사용 가능 개수: " + upToDateDrug.getUsableAmount());
-            }
-
-            //사용한 약 개수만큼 사용 가능 개수에서 빼서 업데이트
-            upToDateDrug.setUsableAmount(usableAmount - usedAmount);
-            drugRepository.save(upToDateDrug);
         } catch (Exception e) {
-            log.error("약 재고 업데이트 중 오류 발생: {}" + e.getMessage());
+            log.error("약 재고 업데이트 중 오류 발생: {}", e.getMessage());
             throw new RuntimeException("약 재고 업데이트 중 오류 발생: " + e.getMessage());
         }
-
     }
-
-
 }

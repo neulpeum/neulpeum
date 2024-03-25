@@ -66,9 +66,9 @@ public class DrugController {
 
     // 상담시 제공한 약 재고 업데이트
     @PatchMapping("/patient/drug")
-    public ResponseEntity<?> updateUsedDrug(@RequestBody DrugUpdateRequestDto drugUpdateRequestDto) {
+    public ResponseEntity<?> updateUsedDrug(@RequestBody List<DrugUpdateRequestDto> drugUpdateRequestDtoList) {
         try {
-            drugService.updateUsedDrug(drugUpdateRequestDto);
+            drugService.updateUsedDrug(drugUpdateRequestDtoList);
             return ResponseEntity.ok("약 재고 업데이트 완료");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("약 재고 업데이트 중 오류 발생 : " + e.getMessage());
