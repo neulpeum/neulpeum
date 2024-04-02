@@ -5,7 +5,6 @@ import com.medicare.neulpeum.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -16,7 +15,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 @Configuration
 @EnableWebSecurity
@@ -24,7 +22,6 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 public class SecurityConfig {
 
     private final CustomUserDetailService userDetailsService;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -35,13 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeRequest) ->
                         authorizeRequest
                                 .requestMatchers("/api/login").permitAll()
-                                .requestMatchers("/accountSettings", "/drugs").hasAuthority("ADMIN")
-                                .requestMatchers("/api/admin/**", "/api/drug").hasAuthority("ADMIN")
                                 .anyRequest().authenticated()
-                )
-                .exceptionHandling(e -> e
-                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())//인증예외
-                        .accessDeniedHandler(new CustomAccessDenyHandler())//인가예외
                 )
 
                 // Rest 방식으로 로그인을 할 것이므로 form 로그인 사용 안함
@@ -57,7 +48,11 @@ public class SecurityConfig {
                 //인증되지 않은 자원에 접근했을 때
                 .exceptionHandling((configurer) ->
                         configurer
-                                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN)))
+//                                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN)))
+                                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())//인증예외
+                                .accessDeniedHandler(new CustomAccessDenyHandler())//인가예외
+                )
+
                 .sessionManagement((sessionManagement) ->
                         sessionManagement
                                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)//스프링 시큐리티가 항상 세션 생성
