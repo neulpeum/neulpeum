@@ -12,6 +12,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -34,13 +35,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeRequest) ->
                         authorizeRequest
                                 .requestMatchers("/api/login").permitAll()
-                                .requestMatchers("/accountSettings", "/drugs").hasAuthority("ROLE_ADMIN")
-                                .requestMatchers("/api/admin/**", "/api/drug").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/accountSettings", "/drugs").hasAuthority("ADMIN")
+                                .requestMatchers("/api/admin/**", "/api/drug").hasAuthority("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling(e -> e
-                        .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
-                        .accessDeniedHandler(new JwtAccessDenyHandler())
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())//인증예외
+                        .accessDeniedHandler(new CustomAccessDenyHandler())//인가예외
                 )
 
                 // Rest 방식으로 로그인을 할 것이므로 form 로그인 사용 안함
@@ -56,7 +57,16 @@ public class SecurityConfig {
                 //인증되지 않은 자원에 접근했을 때
                 .exceptionHandling((configurer) ->
                         configurer
-                                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN)));
+                                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN)))
+
+                .sessionManagement((sessionManagement) ->
+                        sessionManagement
+                                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)//스프링 시큐리티가 항상 세션 생성
+                                .invalidSessionUrl("/")//세션이 유효하지 않을 때 이동
+                                .maximumSessions(-1)//최대 허용 가능 세션 수 : 무제한으로 설정
+                                .expiredUrl("/")//세션 만료될 경우 페이지 이동
+                );
+
 
 
         return http.build();

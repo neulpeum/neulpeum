@@ -11,7 +11,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.io.IOException;
 
-public class JwtAccessDenyHandler implements AccessDeniedHandler {
+public class CustomAccessDenyHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         ErrorResponse errorResponse = new ErrorResponse(ErrorCode.FORBIDDEN_CLIENT);
