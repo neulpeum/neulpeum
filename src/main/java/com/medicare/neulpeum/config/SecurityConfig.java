@@ -29,8 +29,9 @@ public class SecurityConfig {
 
                 // 로그인 등 인증이 필요없는 요청에 대해서는 전체허용 (permitAll)
                 // 그 외 모든 요청 (any) 에 대해서는 인증 요구
-                .authorizeHttpRequests((authorizeRequest) ->
-                        authorizeRequest
+                .authorizeHttpRequests((authorizeRequests) ->
+                        authorizeRequests
+//                                .requestMatchers("/**").permitAll()
                                 .requestMatchers("/api/login").permitAll()
                                 .requestMatchers("/api/admin/changePw", "/api/admin").hasRole("ADMIN")
                                 .requestMatchers("/api/drug", "/api/findDrug").hasRole("ADMIN")
