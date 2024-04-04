@@ -3,6 +3,7 @@ package com.medicare.neulpeum.auth;
 import com.medicare.neulpeum.domain.entity.UserInfo;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -19,14 +20,19 @@ public class CustomUserDetail implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.println(this.userInfo.getAuthority());
         Collection<GrantedAuthority> collection = new ArrayList<>();
-        collection.add(new GrantedAuthority() {
-                           @Override
-                           public String getAuthority() {
-                               return userInfo.getAuthority().name();
-                           }
-                       }
-        );
+        collection.add(new SimpleGrantedAuthority(this.userInfo.getAuthority().name()));
+//        collection.add(
+//                new GrantedAuthority() {
+//                           @Override
+//                           public String getAuthority() {
+//
+//                               System.out.println("========================="+userInfo.getAuthority().name());
+//                           return userInfo.getAuthority().name();
+//                           }
+//                       }
+//        );
         return collection;
     }
 
