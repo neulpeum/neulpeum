@@ -83,6 +83,7 @@ public class CustomUserDetailService implements UserDetailsService {
                 SecurityContextHolder.getContext());
 
         Cookie cookie = new Cookie("JSESSIONID", session.getId());
+        System.out.println(session.getId() + "===========================");
         cookie.setPath("/");
         cookie.setMaxAge(30000 * 60);
         response.addCookie(cookie);
