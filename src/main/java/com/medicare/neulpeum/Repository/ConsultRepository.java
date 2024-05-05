@@ -12,4 +12,6 @@ public interface ConsultRepository extends JpaRepository<ConsultContentInfo, Lon
     List<ConsultContentInfo> findAllByPatientId(PatientInfo patientId);
 
     Optional<ConsultContentInfo> findByConsultId(Long consultId);
+
+    Optional<ConsultContentInfo> deleteByConsultId(Long consultId);
 }
