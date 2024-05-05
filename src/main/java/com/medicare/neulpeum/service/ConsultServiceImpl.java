@@ -87,5 +87,11 @@ public class ConsultServiceImpl implements ConsultService{
         }
     }
 
-
+    @Override
+    public void delete(Long consultId) {
+        Optional<ConsultContentInfo> optionalConsultContentInfo = consultRepository.findByConsultId(consultId);
+        if (optionalConsultContentInfo.isPresent()) {
+            consultRepository.deleteByConsultId(consultId);
+        }
+    }
 }

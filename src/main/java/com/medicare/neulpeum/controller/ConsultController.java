@@ -65,5 +65,16 @@ public class ConsultController {
         }
     }
 
-
+    @DeleteMapping("/patient/consultDelete")
+    public ResponseEntity<?> deleteConsultInfo(@RequestParam Long consultId) {
+        try {
+            consultService.delete(consultId);
+            return ResponseEntity.status(HttpStatus.OK).body("주민 상담 상세 내용 삭제 완료");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("상담 정보를 찾을 수 없습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("주민 상담 내용 삭제 중 오류 발생: " + e.getMessage());
+        }
+    }
 }
