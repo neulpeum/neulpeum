@@ -1,7 +1,9 @@
 package com.medicare.neulpeum.service;
 
 import com.medicare.neulpeum.Repository.DrugRepository;
+import com.medicare.neulpeum.Repository.ProvidedDrugRepository;
 import com.medicare.neulpeum.domain.entity.DrugInfo;
+import com.medicare.neulpeum.domain.entity.ProvidedDrugInfo;
 import com.medicare.neulpeum.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class DrugServiceImpl implements DrugService{
 
     @Autowired
     DrugRepository drugRepository;
+    @Autowired
+    ProvidedDrugRepository providedDrugRepository;
 
     @Override
     public void save(DrugRequestDto drugReq) {
@@ -101,6 +105,12 @@ public class DrugServiceImpl implements DrugService{
                         drugRepository.save(drug);
 
                         //ProvidedDrugInfo 테이블에 저장
+                        ProvidedDrugInfo providedDrugInfo = ProvidedDrugInfo.builder()
+                                .drugId(drug)
+                                .consultId(updateRequestDto.getConsultId())
+                                .providedAmount((long) remainingAmount)
+                                .build();
+                        providedDrugRepository.save(providedDrugInfo);
 
                         break;
                     } else {
@@ -109,6 +119,14 @@ public class DrugServiceImpl implements DrugService{
                         remainingAmount -= usableAmount;
                         drug.setUsableAmount(0);
                         drugRepository.save(drug);
+
+                        //ProvidedDrugInfo 테이블에 저장
+                        ProvidedDrugInfo providedDrugInfo = ProvidedDrugInfo.builder()
+                                .drugId(drug)
+                                .consultId(updateRequestDto.getConsultId())
+                                .providedAmount((long) remainingAmount)
+                                .build();
+                        providedDrugRepository.save(providedDrugInfo);
                     }
                 }
             }
