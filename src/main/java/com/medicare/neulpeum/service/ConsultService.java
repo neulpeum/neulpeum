@@ -6,7 +6,7 @@ import com.medicare.neulpeum.dto.*;
 import java.util.List;
 
 public interface ConsultService {
-    void save(ConsultRequestDto consultRequestDto);
+    Long save(ConsultRequestDto consultRequestDto);
 
     List<ConsultResponseDto> findAllByPatientId(PatientInfo patientId);
 

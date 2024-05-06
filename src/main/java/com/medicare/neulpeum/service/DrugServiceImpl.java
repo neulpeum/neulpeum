@@ -2,10 +2,7 @@ package com.medicare.neulpeum.service;
 
 import com.medicare.neulpeum.Repository.DrugRepository;
 import com.medicare.neulpeum.domain.entity.DrugInfo;
-import com.medicare.neulpeum.dto.DrugNameAndAmountResponseDto;
-import com.medicare.neulpeum.dto.DrugRequestDto;
-import com.medicare.neulpeum.dto.DrugResponseDto;
-import com.medicare.neulpeum.dto.DrugUpdateRequestDto;
+import com.medicare.neulpeum.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -102,6 +99,9 @@ public class DrugServiceImpl implements DrugService{
                     if (usableAmount >= remainingAmount) {
                         drug.setUsableAmount(usableAmount - remainingAmount);
                         drugRepository.save(drug);
+
+                        //ProvidedDrugInfo 테이블에 저장
+
                         break;
                     } else {
                         //사용 가능한 개수가 사용하려는 개수보다 적은 경우 약 재고를 0개로 변경 후
