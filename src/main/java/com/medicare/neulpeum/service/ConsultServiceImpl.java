@@ -116,4 +116,10 @@ public class ConsultServiceImpl implements ConsultService{
             consultRepository.deleteByConsultId(consultId);
         }
     }
+
+    @Override
+    public ConsultContentInfo findById(Long consultId) {
+        Optional<ConsultContentInfo> consultContentInfoOptional= consultRepository.findById(consultId);
+        return consultContentInfoOptional.orElse(null);
+    }
 }

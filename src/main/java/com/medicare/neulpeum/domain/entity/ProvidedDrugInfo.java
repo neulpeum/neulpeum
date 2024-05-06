@@ -27,5 +27,5 @@ public class ProvidedDrugInfo {
     private ConsultContentInfo consultId;
 
     @Column(nullable = false)
-    private Long providedAmount;
+    private int providedAmount;
 }

@@ -1,10 +1,15 @@
 package com.medicare.neulpeum.service;
 
+import com.medicare.neulpeum.Repository.ConsultRepository;
 import com.medicare.neulpeum.Repository.DrugRepository;
 import com.medicare.neulpeum.Repository.ProvidedDrugRepository;
+import com.medicare.neulpeum.domain.entity.ConsultContentInfo;
 import com.medicare.neulpeum.domain.entity.DrugInfo;
 import com.medicare.neulpeum.domain.entity.ProvidedDrugInfo;
-import com.medicare.neulpeum.dto.*;
+import com.medicare.neulpeum.dto.DrugNameAndAmountResponseDto;
+import com.medicare.neulpeum.dto.DrugRequestDto;
+import com.medicare.neulpeum.dto.DrugResponseDto;
+import com.medicare.neulpeum.dto.DrugUpdateRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +28,8 @@ public class DrugServiceImpl implements DrugService{
     DrugRepository drugRepository;
     @Autowired
     ProvidedDrugRepository providedDrugRepository;
+    @Autowired
+    ConsultRepository consultRepository;
 
     @Override
     public void save(DrugRequestDto drugReq) {
@@ -93,6 +100,11 @@ public class DrugServiceImpl implements DrugService{
             for (DrugUpdateRequestDto updateRequestDto : drugUpdateRequestDtoList) {
                 String drugName = updateRequestDto.getDrugName();
                 int usedAmount = updateRequestDto.getUsedAmount();
+                ConsultContentInfo consultId = consultRepository.findByConsultId(updateRequestDto.getConsultId()).orElse(null);
+                if (consultId == null) {
+                    throw new IllegalArgumentException("상담내역을 찾을 수 없습니다. ID: " + updateRequestDto.getConsultId());
+                }
+
 
                 //약 이름으로 유통기한이 가장 짧은 것을 DB에서 조회
                 List<DrugInfo> drugs = drugRepository.findByDrugNameOrderByExpireDateAsc(drugName);
@@ -105,10 +117,11 @@ public class DrugServiceImpl implements DrugService{
                         drugRepository.save(drug);
 
                         //ProvidedDrugInfo 테이블에 저장
+
                         ProvidedDrugInfo providedDrugInfo = ProvidedDrugInfo.builder()
                                 .drugId(drug)
-                                .consultId(updateRequestDto.getConsultId())
-                                .providedAmount((long) remainingAmount)
+                                .consultId(consultId)
+                                .providedAmount(remainingAmount)
                                 .build();
                         providedDrugRepository.save(providedDrugInfo);
 
@@ -123,8 +136,8 @@ public class DrugServiceImpl implements DrugService{
                         //ProvidedDrugInfo 테이블에 저장
                         ProvidedDrugInfo providedDrugInfo = ProvidedDrugInfo.builder()
                                 .drugId(drug)
-                                .consultId(updateRequestDto.getConsultId())
-                                .providedAmount((long) remainingAmount)
+                                .consultId(consultId)
+                                .providedAmount(usableAmount)
                                 .build();
                         providedDrugRepository.save(providedDrugInfo);
                     }
