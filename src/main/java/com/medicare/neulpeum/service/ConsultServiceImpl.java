@@ -32,19 +32,41 @@ public class ConsultServiceImpl implements ConsultService{
 
 
     @Override
-    public void save(ConsultRequestDto consultReq) {
+    public Long save(ConsultRequestDto consultReq) {
         try {
-            PatientInfo patientId = patientRepository.findById(consultReq.getPatientId()).get();
+            PatientInfo patientId = patientRepository.findById(consultReq.getPatientId()).orElse(null);
+            if (patientId == null) {
+                throw new IllegalArgumentException("환자를 찾을 수 없습니다. ID: " + consultReq.getPatientId());
+            }
+
             ConsultContentInfo consultContentInfo = ConsultContentInfo.builder()
                     .patientId(patientId)
                     .providerName(consultReq.getProviderName())
                     .takingDrug(consultReq.getTakingDrug())
                     .consultContent(consultReq.getConsultContent())
                     .build();
-            consultRepository.save(consultContentInfo);
+
+            ConsultContentInfo savedConsult = consultRepository.save(consultContentInfo);
+//            log.info("*********************" + savedConsult.getConsultId());
+            return savedConsult.getConsultId();
+
         } catch (Exception e) {
             log.error("ConsultContentInfo 저장 중 오류 발생: {}", e.getMessage());
+            throw new RuntimeException("ConsultContentInfo 저장 중 오류 발생: " + e.getMessage());
         }
+
+//        try {
+//            PatientInfo patientId = patientRepository.findById(consultReq.getPatientId()).get();
+//            ConsultContentInfo consultContentInfo = ConsultContentInfo.builder()
+//                    .patientId(patientId)
+//                    .providerName(consultReq.getProviderName())
+//                    .takingDrug(consultReq.getTakingDrug())
+//                    .consultContent(consultReq.getConsultContent())
+//                    .build();
+//            consultRepository.save(consultContentInfo);
+//        } catch (Exception e) {
+//            log.error("ConsultContentInfo 저장 중 오류 발생: {}", e.getMessage());
+//        }
     }
 
 
