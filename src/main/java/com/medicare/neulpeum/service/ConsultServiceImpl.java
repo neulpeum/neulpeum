@@ -54,19 +54,6 @@ public class ConsultServiceImpl implements ConsultService{
             log.error("ConsultContentInfo 저장 중 오류 발생: {}", e.getMessage());
             throw new RuntimeException("ConsultContentInfo 저장 중 오류 발생: " + e.getMessage());
         }
-
-//        try {
-//            PatientInfo patientId = patientRepository.findById(consultReq.getPatientId()).get();
-//            ConsultContentInfo consultContentInfo = ConsultContentInfo.builder()
-//                    .patientId(patientId)
-//                    .providerName(consultReq.getProviderName())
-//                    .takingDrug(consultReq.getTakingDrug())
-//                    .consultContent(consultReq.getConsultContent())
-//                    .build();
-//            consultRepository.save(consultContentInfo);
-//        } catch (Exception e) {
-//            log.error("ConsultContentInfo 저장 중 오류 발생: {}", e.getMessage());
-//        }
     }
 
 
@@ -117,9 +104,4 @@ public class ConsultServiceImpl implements ConsultService{
         }
     }
 
-    @Override
-    public ConsultContentInfo findById(Long consultId) {
-        Optional<ConsultContentInfo> consultContentInfoOptional= consultRepository.findById(consultId);
-        return consultContentInfoOptional.orElse(null);
-    }
 }
