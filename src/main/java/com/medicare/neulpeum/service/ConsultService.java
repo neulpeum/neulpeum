@@ -1,6 +1,5 @@
 package com.medicare.neulpeum.service;
 
-import com.medicare.neulpeum.domain.entity.ConsultContentInfo;
 import com.medicare.neulpeum.domain.entity.PatientInfo;
 import com.medicare.neulpeum.dto.ConsultDetailResponseDto;
 import com.medicare.neulpeum.dto.ConsultRequestDto;
@@ -20,5 +19,4 @@ public interface ConsultService {
 
     void delete(Long consultId);
 
-    ConsultContentInfo findById(Long consultId);
 }
