@@ -1,7 +1,11 @@
 package com.medicare.neulpeum.service;
 
+import com.medicare.neulpeum.domain.entity.ConsultContentInfo;
 import com.medicare.neulpeum.domain.entity.PatientInfo;
-import com.medicare.neulpeum.dto.*;
+import com.medicare.neulpeum.dto.ConsultDetailResponseDto;
+import com.medicare.neulpeum.dto.ConsultRequestDto;
+import com.medicare.neulpeum.dto.ConsultResponseDto;
+import com.medicare.neulpeum.dto.ConsultUpdateRequestDto;
 
 import java.util.List;
 
@@ -15,4 +19,6 @@ public interface ConsultService {
     void update(ConsultUpdateRequestDto consultUpdateRequestDto);
 
     void delete(Long consultId);
+
+    ConsultContentInfo findById(Long consultId);
 }
