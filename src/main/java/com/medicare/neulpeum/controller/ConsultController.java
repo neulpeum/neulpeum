@@ -20,12 +20,12 @@ public class ConsultController {
 
     //주민 상담 내용 추가
     @PostMapping("/patient/consult")
-    public ResponseEntity<?> postConsultInfo(@RequestBody ConsultRequestDto consultRequestDto) {
+    public ResponseEntity<Long> postConsultInfo(@RequestBody ConsultRequestDto consultRequestDto) {
         try {
-            consultService.save(consultRequestDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body("consult content 저장 완료");
+            Long consultId = consultService.save(consultRequestDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(consultId);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("consult content 저장 중 오류 발생 " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(-1L);
         }
     }
 
