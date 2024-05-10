@@ -4,6 +4,9 @@ import com.medicare.neulpeum.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static jakarta.persistence.FetchType.LAZY;
 
 @Getter
@@ -31,5 +34,8 @@ public class ConsultContentInfo extends BaseTimeEntity {
 
     @Column
     private String takingDrug;
+
+    @OneToMany(mappedBy = "consultId", cascade = CascadeType.REMOVE)
+    private List<ProvidedDrugInfo> providedDrugInfos = new ArrayList<>();
 
 }

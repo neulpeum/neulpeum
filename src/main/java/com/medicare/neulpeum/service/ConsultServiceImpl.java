@@ -1,9 +1,13 @@
 package com.medicare.neulpeum.service;
 
 import com.medicare.neulpeum.Repository.ConsultRepository;
+import com.medicare.neulpeum.Repository.DrugRepository;
 import com.medicare.neulpeum.Repository.PatientRepository;
+import com.medicare.neulpeum.Repository.ProvidedDrugRepository;
 import com.medicare.neulpeum.domain.entity.ConsultContentInfo;
+import com.medicare.neulpeum.domain.entity.DrugInfo;
 import com.medicare.neulpeum.domain.entity.PatientInfo;
+import com.medicare.neulpeum.domain.entity.ProvidedDrugInfo;
 import com.medicare.neulpeum.dto.ConsultDetailResponseDto;
 import com.medicare.neulpeum.dto.ConsultRequestDto;
 import com.medicare.neulpeum.dto.ConsultResponseDto;
@@ -28,6 +32,10 @@ public class ConsultServiceImpl implements ConsultService{
     ConsultRepository consultRepository;
     @Autowired
     PatientRepository patientRepository;
+    @Autowired
+    ProvidedDrugRepository providedDrugRepository;
+    @Autowired
+    DrugRepository drugRepository;
 
 
 
@@ -97,11 +105,34 @@ public class ConsultServiceImpl implements ConsultService{
     }
 
     @Override
+    @Transactional
     public void delete(Long consultId) {
+        // 상담 내역(ConsultContentInfo)을 consultId로 조회
         Optional<ConsultContentInfo> optionalConsultContentInfo = consultRepository.findByConsultId(consultId);
+
         if (optionalConsultContentInfo.isPresent()) {
-            consultRepository.deleteByConsultId(consultId);
+            ConsultContentInfo consultContentInfo = optionalConsultContentInfo.get();
+
+            // 상담 내역에 연결된 약 정보(ProvidedDrugInfo) 조회
+            List<ProvidedDrugInfo> providedDrugInfos = providedDrugRepository.findAllByConsultId(consultContentInfo);
+
+            // 각 약 정보에 대해 처리: 약 정보의 usableAmount 업데이트
+            for (ProvidedDrugInfo providedDrugInfo : providedDrugInfos) {
+                DrugInfo drugInfo = providedDrugInfo.getDrugId();
+                int providedAmount = providedDrugInfo.getProvidedAmount();
+
+                // 약 정보의 usableAmount 업데이트
+                int currentUsableAmount = drugInfo.getUsableAmount();
+                drugInfo.setUsableAmount(currentUsableAmount + providedAmount);
+
+                // ConsultContentInfo에 연결된 ProvidedDrugInfo 엔티티 삭제
+                providedDrugRepository.deleteByConsultId(consultContentInfo);
+            }
+
+            // ConsultContentInfo 엔티티 삭제
+            consultRepository.delete(consultContentInfo);
+        } else {
+            throw new IllegalArgumentException("상담 내역 id " + consultId + "에 해당하는 정보를 찾을 수 없습니다.");
         }
     }
-
 }
