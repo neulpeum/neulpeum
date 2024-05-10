@@ -74,7 +74,7 @@ public class ConsultController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("상담 정보를 찾을 수 없습니다.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("주민 상담 내용 삭제 중 오류 발생: " + e.getMessage());
+                    .body(e.getMessage());
         }
     }
 }
