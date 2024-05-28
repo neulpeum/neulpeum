@@ -26,10 +26,10 @@ public class ConsultContentInfo extends BaseTimeEntity {
     @JoinColumn(name = "patientId", nullable = false)
     private PatientInfo patientId;
 
-    @Column(nullable = false)
+    @Column
     private String providerName;
 
-    @Column(nullable = false)
+    @Column
     private String consultContent;
 
     @Column
