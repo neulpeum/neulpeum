@@ -51,6 +51,17 @@ public class ConsultController {
         }
     }
 
+    //주민 상담 내용 상세 조회 - 약 이름 & 제공한 약 개수
+    @GetMapping("/patient/consultInfo/providedDrug")
+    public ResponseEntity<List<ConsultDrugResponseDto>> getConsultDetailDrug(@RequestParam Long consultId) {
+        List<ConsultDrugResponseDto> consultDrugResponseDtoList = consultService.findDrugInfoByConsultId(consultId);
+        if (!consultDrugResponseDtoList.isEmpty()) {
+            return ResponseEntity.ok(consultDrugResponseDtoList);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     //주민 상담 상세 내용 수정
     @PutMapping("/patient/consultInfo")
     public ResponseEntity<?> updateConsultInfo(@RequestBody ConsultUpdateRequestDto consultUpdateRequestDto) {

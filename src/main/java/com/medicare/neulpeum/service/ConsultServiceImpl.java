@@ -8,10 +8,7 @@ import com.medicare.neulpeum.domain.entity.ConsultContentInfo;
 import com.medicare.neulpeum.domain.entity.DrugInfo;
 import com.medicare.neulpeum.domain.entity.PatientInfo;
 import com.medicare.neulpeum.domain.entity.ProvidedDrugInfo;
-import com.medicare.neulpeum.dto.ConsultDetailResponseDto;
-import com.medicare.neulpeum.dto.ConsultRequestDto;
-import com.medicare.neulpeum.dto.ConsultResponseDto;
-import com.medicare.neulpeum.dto.ConsultUpdateRequestDto;
+import com.medicare.neulpeum.dto.*;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,5 +131,21 @@ public class ConsultServiceImpl implements ConsultService{
         } else {
             throw new IllegalArgumentException("상담 내역 id " + consultId + "에 해당하는 정보를 찾을 수 없습니다.");
         }
+    }
+
+    //상담 상세 페이지에서 제공한 약 이름 & 제공한 약 개수 리스트로 반환
+    @Override
+    public List<ConsultDrugResponseDto> findDrugInfoByConsultId(Long consultId) {
+        Optional<ConsultContentInfo> consultContentInfoOptional = consultRepository.findById(consultId);
+        if (consultContentInfoOptional.isPresent()) {
+            ConsultContentInfo consultContentInfo = consultContentInfoOptional.get();
+            List<ProvidedDrugInfo> providedDrugInfos = providedDrugRepository.findByConsultId(consultContentInfo);
+            return providedDrugInfos.stream()
+                    .map(providedDrugInfo -> new ConsultDrugResponseDto(providedDrugInfo, providedDrugInfo.getDrugId()))
+                    .collect(Collectors.toList());
+        } else {
+            throw new IllegalArgumentException("상담 내역을 찾을 수 없습니다. ID: " + consultId);
+        }
+
     }
 }

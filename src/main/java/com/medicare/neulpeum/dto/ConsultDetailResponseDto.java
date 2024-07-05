@@ -1,14 +1,9 @@
 package com.medicare.neulpeum.dto;
 
 import com.medicare.neulpeum.domain.entity.ConsultContentInfo;
-import com.medicare.neulpeum.domain.entity.PatientInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
