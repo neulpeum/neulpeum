@@ -10,7 +10,10 @@ import java.util.List;
 public interface ProvidedDrugRepository extends JpaRepository<ProvidedDrugInfo, Long> {
     List<ProvidedDrugInfo> findAllByConsultId(ConsultContentInfo consultContentInfo);
 
+    List<ProvidedDrugInfo> findDrugInfoAndProvidedAmountByConsultId(ConsultContentInfo consultContentInfo);
+
     @Transactional
     void deleteByConsultId(ConsultContentInfo consultContentInfo); // ProvidedDrugInfo 엔티티 삭제
 
+    List<ProvidedDrugInfo> findByConsultId(ConsultContentInfo consultContentInfo);
 }
