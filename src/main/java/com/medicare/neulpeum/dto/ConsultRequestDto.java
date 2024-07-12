@@ -13,4 +13,5 @@ public class ConsultRequestDto {
     private String providerName;
     private String takingDrug;
     private String consultContent;
+    private String consultedAt;
 }

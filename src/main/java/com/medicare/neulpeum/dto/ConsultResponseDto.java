@@ -16,12 +16,12 @@ public class ConsultResponseDto {
     private Long consultId;
     private String providerName;
     private String takingDrug;
-    private String consultDate;
+    private String consultedAt;
 
     public ConsultResponseDto(ConsultContentInfo consultContentInfo) {
         this.consultId = consultContentInfo.getConsultId();
         this.providerName = consultContentInfo.getProviderName();
         this.takingDrug = consultContentInfo.getTakingDrug();
-        this.consultDate = consultContentInfo.getCreatedAt();
+        this.consultedAt = consultContentInfo.getConsultedAt();
     }
 }

@@ -35,6 +35,9 @@ public class ConsultContentInfo extends BaseTimeEntity {
     @Column
     private String takingDrug;
 
+    @Column
+    private String consultedAt;
+
     @OneToMany(mappedBy = "consultId", cascade = CascadeType.REMOVE)
     private List<ProvidedDrugInfo> providedDrugInfos = new ArrayList<>();
 

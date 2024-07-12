@@ -49,6 +49,7 @@ public class ConsultServiceImpl implements ConsultService{
                     .providerName(consultReq.getProviderName())
                     .takingDrug(consultReq.getTakingDrug())
                     .consultContent(consultReq.getConsultContent())
+                    .consultedAt(consultReq.getConsultedAt())
                     .build();
 
             ConsultContentInfo savedConsult = consultRepository.save(consultContentInfo);
